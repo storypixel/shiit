@@ -1,0 +1,338 @@
+@import "../bower_components/bourbon/app/assets/stylesheets/bourbon";
+@import "settings/neat";
+@import "../bower_components/neat/app/assets/stylesheets/neat";
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+@import url(http://basehold.it/24);
+/*
+HelveticaNeueLTPro-BdCn.otf
+HelveticaNeueLTPro-Cn.otf
+HelveticaNeueLTPro-LtCn.otf
+HelveticaNeueLTPro-MdCn.otf
+HelveticaNeueLTPro-ThCn.otf
+*/
+
+@font-face {
+	font-family: HelveticaSauce;
+	src: url("/fonts/HelveticaNeueLTPro-ThCn.otf") format("opentype");
+}
+
+@font-face {
+	font-family: HelveticaSauce;
+	font-weight: bold;
+	src: url("/fonts/HelveticaNeueLTPro-Cn.otf") format("opentype");
+}
+
+$fs-normal: 14px;
+$fs-small: golden-ratio($fs-normal,  -1);
+$fs-large: 24px;
+$fs-larger: 32px;
+$fs-largest: 48*2px; //golden-ratio($fs-normal,  4);
+
+// Grays
+// -------------------------
+
+$gray-darker:            lighten(#000, 13.5%) !default; // #222
+$gray-dark:              lighten(#000, 20%) !default;   // #333
+$gray:                   lighten(#000, 33.5%) !default; // #555
+$gray-light:             lighten(#000, 60%) !default;   // #999
+$gray-lighter:           lighten(#000, 93.5%) !default; // #eee
+
+// Brand colors
+// -------------------------
+
+$brand-primary:         #428bca !default;
+
+$baseline-color: white;
+$gray-moody: #272822;
+$blue-deep: #061F47;
+$blue-bright: #5DE1E5;
+$blue-nobel: #006FA0;
+$blue-subtle: #094279;
+$blue-electric: hsl(180, 86%, 41%); // #0EC0C1;
+$orange-electric: hsl(360, 86%, 41%); // #0EC0C1;
+$green-electric: hsl(70, 86%, 41%); // #0EC0C1;
+$red-electric: hsl(355, 86%, 41%); // #0EC0C1;
+$blue-electric: hsl(70, 86%, 41%); // #0EC0C1;
+$green-light: #E7FFAC;
+$clr-button-primary: $baseline-color;
+$clr-border: $baseline-color;
+$clr-button-background: transparent;
+$clr-button-color: $baseline-color;
+$clr-background: $blue-electric;
+$clr-text-secondary: $baseline-color;
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+h1, h2, h3, h4, h5, h6{
+	font-size: inherit;
+	margin: 0;
+}
+
+body{
+//    font-size: 10em;
+	color: $baseline-color;
+	//line-height: $fs-normal * 3;
+	background-color: $clr-background;
+	font-size: $fs-normal;
+	line-height: 1;
+	@extend .big-serious;
+}
+
+.timer{
+	font-size: $fs-larger;
+	letter-spacing: 1px;
+	@include media($tablet-width) {
+		font-size: 64px;
+		//text-indent: 777px;
+		letter-spacing: 3px;
+	}
+}
+
+.row{
+    //background: red;
+    width: 100%;
+    @include outer-container;
+    &:before, &:after{
+    	content: " ";
+    	display: table;    	
+    }
+}
+
+.col{
+	position: relative;
+	padding-left: 0.9375rem;
+	padding-right: 0.9375rem;
+	float: left; 	
+}
+
+h2{
+	//font-size: $fs-larger;
+	background-color: transparent; //cyan;
+	color: $clr-text-secondary;
+	margin: 0;
+	font-weight: normal;
+	//line-height: $fs-large;
+}
+
+h3{
+	color: $gray-light;
+	font-weight: normal;
+	span{		
+		color: white;
+		font-weight: bold;
+	}
+}
+
+.button{
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	-webkit-user-select: none;
+}
+
+.button-default{
+	color: $baseline-color;
+	//background-color: #fff;
+	border-color: $clr-border;	
+}
+
+.big-serious{
+	font-family: HelveticaSauce, "Open Sans Condensed", sans-serif;
+	text-transform: uppercase;
+}
+
+.dimension, .total-time{
+	padding-top: 24px;
+	padding-bottom: 15px;		
+	@include media($tablet-width) {
+		padding-bottom: 7px;
+		//text-indent: 777px;
+	}
+
+}
+
+time{
+	text-align: right;
+	font-weight: bold;
+}	
+
+button{
+	@extend .button;
+	@extend .button-default;
+	@extend .big-serious;	
+	&.action{
+		//background-color: white;
+		background-color: $clr-button-background;
+		color: $clr-button-color;
+		border-color: $clr-border;
+		padding: 8px 12px 0px;
+	}	
+	&.less, &.more{
+		background-color: transparent;				
+		background-position: center center;
+		background-repeat: no-repeat;
+		border-radius: 50%;
+		background-size: 50%;
+		padding: 0;
+		text-indent: -9999em;
+		width: 42px;
+		height: 42px;
+		@include media($tablet-width) {
+			width: 64px;
+			height: 64px;
+		}
+
+	}
+	&.less{
+		background-image: url(/images/minusFFFFFF.svg);
+		//right: 0;
+	}
+	&.more{
+		background-image: url(/images/plusFFFFFF.svg);		
+	}
+	& + &{
+		// when one button follows another
+		margin-left: $fs-small;
+	}
+	&.verbal{
+		font-weight: bold;
+		height: 48px;
+		@include media($tablet-width) {
+			height: 96px;
+			padding: 18px 12px 0;
+		}		
+	}
+
+}
+
+/* LAYOUT */
+.dimension{
+	border-bottom: 1px $clr-border solid;
+	//font-size: $fs-large;
+	>h2, >nav, >time, >aside{
+		@extend .col;		
+	}
+	>h2{
+		@include span-columns(3);
+		//@extend .big-serious;
+		.at-work &{
+			@include span-columns(7);			
+		}
+	}
+	>time{
+		@include span-columns(4);
+	}
+
+	&.repeat time{
+		&:after{
+			color: $baseline-color;
+			content: "x";
+			font-size: $fs-larger;
+			text-transform: none;
+			font-weight: normal;
+			position: absolute;
+			right: 0;
+		}
+	}
+
+	>nav{ 
+		text-align: right;
+		//font-size: $fs-large;
+		margin-top: -10px;
+		@include span-columns(5); 
+		@include media($tablet-width) {
+			margin-bottom: -8px;
+			//text-indent: 777px;
+		}	
+	}
+	>aside{
+		text-align: right;
+		@include span-columns(5);		
+	}
+	>nav, >time, >h2{
+		@extend .col;
+		@include media($tablet-width) {	
+			@include span-columns(4);
+		}			
+	}	
+}
+
+.big-time{
+	padding-bottom: 0;
+	time{
+		text-align: center;
+		font-size: $fs-largest;
+		@include media($tablet-width) {
+			font-size: $fs-largest * 2;
+			height: 166px;			
+		}		
+		@include span-columns(12);
+	}
+}
+
+.touch-zone{
+	nav{
+		text-align: center;
+		margin-top: 0;
+		@include span-columns(12); 		
+	}
+}
+
+.total-time{
+	h2{
+		display: none;
+		@include media($tablet-width) {
+			display: block;
+			@include span-columns(4);
+		}
+	}
+	time{
+		text-align: left;
+		@include span-columns(7);
+		@include media($tablet-width) {
+			font-size: $fs-largest * 2;
+			height: 166px;
+			position: relative;
+			text-align: right;
+			span{
+				position: absolute;
+				right: 0;
+			}	
+			//@include span-columns(3);
+		}		
+	}
+	nav{ 
+		margin-top: -12px;
+		text-align: right;
+		@include span-columns(5);
+		.at-work &{
+			text-align: center;
+			@include span-columns(12);				
+		}
+		@include media($tablet-width) {	
+			margin-top: 0;			
+		}		
+	}
+	>nav, >time, >h2{
+		@extend .col;
+		@include media($tablet-width) {	
+			@include span-columns(4);
+		}			
+	}	
+}
+
+nav{
+	line-height: 0;
+}

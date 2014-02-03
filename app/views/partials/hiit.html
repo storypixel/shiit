@@ -1,0 +1,13 @@
+<!-- <h1>okay {{ data.defaultWorkSeconds }}</h1>
+<input type="text" ng-model="data.defaultWorkSeconds" /> -->
+<div ui-view></div>
+<script>
+// fullscreen android
+if(navigator.userAgent.match(/Android/i)){
+    window.scrollTo(0,1);
+}
+// stop rubber banding
+document.ontouchmove = function(e){ 
+    e.preventDefault(); 
+}
+</script>

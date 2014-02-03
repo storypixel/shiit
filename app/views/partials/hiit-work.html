@@ -1,0 +1,21 @@
+<section class="timer at-work row">
+	<header class="row">
+		<div class="work dimension row">
+			<h2>Work</h2>
+			<aside>
+				<h3><span class="current-rep"> {{ data.currentRep }} </span>/<span class="of-total">{{ $parent.data.numRep }}</span></h3>
+			</aside>
+		</div>
+		<div class="big-time dimension row">
+			<time><timer countdown="$parent.data.totalSeconds" interval="1000" autoStart="false">{{minutes}}:{{seconds | padWithZeros}}</timer></time>
+		</div>
+	</header>
+	<footer class="total-time touch-zone row">
+		<nav>
+			<button ng-click="pauseTimer()" ng-show="timerRunning" class="action verbal">Pause</button>
+			<button ng-click="startTimer()" ng-show="!timerRunning" class="action verbal">Start</button>
+	        <!-- <button ng-click="add5Seconds()">Add 5 Seconds</button> -->
+		</nav>
+	</footer>
+	<!-- <div>{{ timerConsole }} </div> -->
+</section>

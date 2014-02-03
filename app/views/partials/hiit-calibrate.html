@@ -1,0 +1,44 @@
+<section class="timer at-rest row">
+	<header class="row">
+		<div class="work dimension row">
+			<h2>Work</h2>
+			<time>{{ $parent.data.workSeconds | digitalTime }}</time>
+			<nav>
+				<button ng-click="lessWork()" class="action less">less</button><!-- 
+			 --><button ng-click="moreWork()" class="action more">more</button>
+			</nav>
+		</div>
+		<div class="rest dimension row">
+			<h2>Rest</h2>
+			<time>{{ $parent.data.restSeconds | digitalTime }}</time>
+			<nav>
+				<button ng-click="lessRest()" class="action less">less</button><!-- 
+			 --><button ng-click="moreRest()" class="action more">more</button>
+			</nav>
+		</div>
+		<div class="repeat dimension row">
+			<h2>Repeat</h2>
+			<time>{{ $parent.data.numReps }}</time>
+			<nav>
+				<button ng-click="lessReps()" class="action less">less</button><!-- 
+			 --><button ng-click="moreReps()" class="action more">more</button>
+			</nav>
+		</div>
+	</header>
+	<footer class="total-time row">
+			<h2>&nbsp;</h2>
+			<time><span>{{ $parent.calcTotalSeconds() | digitalTime }}</timer></span></time>
+			<nav>
+				<button ng-click="goToWork()" class="action verbal start">start</button>
+			</nav>
+	</footer>
+</section>
+<!-- <h3>Timer 3: <timer>{{minutes}} minutes, {{seconds | padWithZeros}} seconds.</timer></h3>
+			<time><span><timer>{{minutes}}:{{seconds | padWithZeros }}</timer></span></time>
+
+<h3><timer/></h3>
+<button ng-click="startTimer()" ng-disabled="timerRunning">Start Timer</button>
+<button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop Timer</button>
+<button ng-click="pauseTimer()" ng-disabled="!timerRunning">Pause Timer</button>
+<button ng-click="resumeTimer()" ng-disabled="timerRunning">Resume Timer</button> -->
+<script>
