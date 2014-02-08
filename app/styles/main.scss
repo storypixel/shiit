@@ -2,7 +2,7 @@
 @import "settings/neat";
 @import "../bower_components/neat/app/assets/stylesheets/neat";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
-@import url(http://basehold.it/24);
+//@import url(http://basehold.it/24);
 /*
 HelveticaNeueLTPro-BdCn.otf
 HelveticaNeueLTPro-Cn.otf
@@ -13,13 +13,13 @@ HelveticaNeueLTPro-ThCn.otf
 
 @font-face {
 	font-family: HelveticaSauce;
-	src: url("/fonts/HelveticaNeueLTPro-ThCn.otf") format("opentype");
+	src: url("/fonts/HelveticaNeueLTPro-UltLtCn.otf") format("opentype");
 }
 
 @font-face {
 	font-family: HelveticaSauce;
 	font-weight: bold;
-	src: url("/fonts/HelveticaNeueLTPro-Cn.otf") format("opentype");
+	src: url("/fonts/HelveticaNeueLTPro-MdCn.otf") format("opentype");
 }
 
 $fs-normal: 14px;
@@ -36,6 +36,9 @@ $gray-dark:              lighten(#000, 20%) !default;   // #333
 $gray:                   lighten(#000, 33.5%) !default; // #555
 $gray-light:             lighten(#000, 60%) !default;   // #999
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
+$white-faded-tons:     rgba(#FFF, .05) !default; // #555
+$white-faded-some:    	 rgba(#FFF, .5) !default; // #555
+$white-faded-barely:     rgba(#FFF, .8) !default; // #555
 
 // Brand colors
 // -------------------------
@@ -54,7 +57,8 @@ $green-electric: hsl(70, 86%, 41%); // #;
 $red-electric: hsl(5, 86%, 41%); // #;
 $green-light: #E7FFAC;
 $clr-button-primary: $baseline-color;
-$clr-border: $baseline-color;
+$clr-button-border: $baseline-color;
+$clr-border: $white-faded-some;
 $clr-button-background: transparent;
 $clr-button-color: $baseline-color;
 $clr-background: $blue-electric;
@@ -93,7 +97,7 @@ h2{
 }
 
 h3{
-	color: $gray-light;
+	color: $white-faded-some;
 	font-weight: normal;
 	span{		
 		color: white;
@@ -109,6 +113,7 @@ h3{
 		//text-indent: 777px;
 		letter-spacing: 3px;
 	}
+	*{ -webkit-user-select: none; user-select: none; }
 }
 
 .sexy-back{
@@ -152,6 +157,7 @@ h3{
 	float: left; 	
 }
 .button{
+	background-color: transparent;
 	display: inline-block;
 	padding: 6px 12px;
 	margin-bottom: 0;
@@ -168,7 +174,7 @@ h3{
 .button-default{
 	color: $baseline-color;
 	//background-color: #fff;
-	border-color: $clr-border;	
+	border-color: $clr-button-border;		
 }
 
 .big-serious{
@@ -197,8 +203,8 @@ button{
 	&.action{
 		//background-color: white;
 		background-color: $clr-button-background;
-		color: $clr-button-color;
-		border-color: $clr-border;
+		color: $white-faded-barely;
+		border-color: $clr-button-border;
 		padding: 8px 12px 0px;
 	}	
 	&.less, &.more{
@@ -236,7 +242,12 @@ button{
 			padding: 18px 12px 0;
 		}		
 	}
-
+	@include transition (all .25s ease-in-out);
+	&:hover{
+		color: $baseline-color;
+		background-color: $white-faded-tons;		
+		border-color: $white-faded-some;
+	}
 }
 
 /* LAYOUT */
@@ -336,16 +347,22 @@ button{
 		}		
 	}
 	nav{ 
-		margin-top: -12px;
+		margin-top: 0;
 		text-align: right;
 		@include span-columns(5);
 		.at-work &{
 			text-align: center;
 			@include span-columns(12);				
+			// @include media($tablet-width) {	
+			// 	margin-top: -12px;			
+			// }
 		}
-		@include media($tablet-width) {	
-			margin-top: 0;			
-		}		
+		.at-rest &{	
+			margin-top: -12px;			
+			@include media($tablet-width) {	
+				margin-top: 0;
+			}
+		}
 	}
 	>nav, >time, >h2{
 		@extend .col;

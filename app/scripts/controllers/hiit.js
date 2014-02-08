@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('shiitApp')
-.controller('HiitCtrl', function ($state, $scope, $http, HiitData) {
-	$http.get('/api/awesomeThings').success(function(awesomeThings) {
-		$scope.awesomeThings = awesomeThings;
-	});
+.controller('HiitCtrl', function ($state, $scope, HiitData) {
+	// $http.get('/api/awesomeThings').success(function(awesomeThings) {
+	// 	$scope.awesomeThings = awesomeThings;
+	// });
 	
 	// console.log('ok');
 	//console.log(HiitData);
@@ -24,12 +24,10 @@ angular.module('shiitApp')
 	}
 
 	function updateCycle(workTime, restTime){
-		var c = [];
-		c.push(
+		return [
 			{'name' : 'work', 'value' : workTime},
 			{'name' : 'rest', 'value' : restTime}
-		);
-		return c;
+		];
 	}
 
 	var workLimit = limitRange(5, 120),
@@ -78,10 +76,11 @@ angular.module('shiitApp')
 
 	// whenever it goes from rest to work or vice versa...
 	$scope.$on('ians-timer:cycle-changed', function (event, data) {
-		console.log('ians-timer:cycle-changed event received');
-		//console.log(data);
+		//console.log('ians-timer:cycle-changed event received');
+		console.log('current round changed to ' + data.round);
 		$scope.stateName = data.cycle;
-		console.log('ians-timer:cycle-changed end' + data.cycle);
+		$scope.currentRound = data.round;
+		//console.log('ians-timer:cycle-changed end' + data.cycle);
 	});
 
 	// $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){

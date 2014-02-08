@@ -1,42 +1,39 @@
 'use strict';
 
 angular.module('shiitApp')
-.controller('HiitWorkCtrl', function ($state, $scope, $http) {
-	$http.get('/api/awesomeThings').success(function(awesomeThings) {
-		$scope.awesomeThings = awesomeThings;
-	});
+.controller('HiitWorkCtrl', function ($state, $scope) {
+	// $http.get('/api/awesomeThings').success(function(awesomeThings) {
+	// 	$scope.awesomeThings = awesomeThings;
+	// });
 
 	var localStateName = 'ready';
 
 	$scope.timerRunning = false;
 	$scope.$parent.stateName = localStateName;
 
-	$scope.startCountdown = function (){
-		console.log('starting startCountdown');
-		$scope.$broadcast('ians-timer:start');
-	};
-
+	// Makethe timer start counting now
 	$scope.startTimer = function (){
 		$scope.$broadcast('ians-timer:start');
 	};
 
+	// Make the timer stop counting now
 	$scope.stopTimer = function (){
 		$scope.$broadcast('ians-timer:stop');
 	};
 	
-	/// $scope.timerConsole = 'waiting...';
-
+	// Heard when the timer has stopped or paused (same)
 	$scope.$on('ians-timer:stopped', function () {
 		$scope.timerRunning = false;
 		// $scope.digest();		
 	});
 
+	// Heard when the timer has started or resumed (same)
 	$scope.$on('ians-timer:started', function () {
 		$scope.timerRunning = true;
 		// $scope.digest();
 	});
 
-	// the data sucks. get better data
+	// the data sucks. get better data. send them to calibrate page to formulate that data
 	$scope.$on('ians-timer:error-data', function () {
 		$state.transitionTo('hiit.calibrate');
 		// $scope.digest();

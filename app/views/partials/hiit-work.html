@@ -3,12 +3,12 @@
 		<div class="work dimension row">
 			<h2>{{ $parent.stateName }}</h2>
 			<aside>
-				<h3><span class="current-rep"> {{ data.currentRep }} </span>/<span class="of-total">{{ $parent.data.numRep }}</span></h3>
+				<h3><span class="current-rep">{{ $parent.currentRound }}</span>/<span class="of-total">{{ $parent.data.numReps }}</span></h3>
 			</aside>
 		</div>
 		<div class="big-time dimension row">
 			<time class="timer">
-				<div ians-timer ng-attr-cycle="$parent.data.cycle" ng-attr-seconds="$parent.data.totalSeconds" ng-attr-rounds="$parent.data.numReps">---</div>
+				<div ians-timer ng-attr-cycle="$parent.data.cycle" ng-attr-seconds="$parent.data.totalSeconds" ng-attr-rounds="$parent.data.numReps">&nbsp;</div>
 			</time>
 			<!-- <timer countdown="$parent.data.totalSeconds" interval="1000" autoStart="false">{{minutes}}:{{seconds | padWithZeros}}</timer> -->
 			<!-- <div ians-timer ng-attr-seconds="$parent.data.totalSeconds" ng-attr-rounds="$parent.data.numReps">place</div> -->
@@ -16,8 +16,8 @@
 	</header>
 	<footer class="total-time touch-zone row">
 		<nav>
-			<button ng-click="stopTimer()" ng-show="timerRunning" class="action verbal">stop</button>
-			<button ng-click="startTimer()" ng-show="!timerRunning" class="action verbal">start</button>
+			<button ng-click="stopTimer()" ng-show="timerRunning" class="action verbal">pause</button>
+			<button ng-click="startTimer()" ng-show="!timerRunning" class="action verbal">resume</button>
 	        <!-- <button ng-click="add5Seconds()">Add 5 Seconds</button> -->
 		</nav>
 	</footer>

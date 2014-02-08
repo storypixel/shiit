@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('shiitApp')
-.controller('HiitCalibrateCtrl', function ($scope, $http) {
-	$http.get('/api/awesomeThings').success(function(awesomeThings) {
-		$scope.awesomeThings = awesomeThings;
-	});
+.controller('HiitCalibrateCtrl', function ($scope) {
+	// $http.get('/api/awesomeThings').success(function(awesomeThings) {
+	// 	$scope.awesomeThings = awesomeThings;
+	// });
 
 	var localStateName = 'calibrating';
 
@@ -13,10 +13,7 @@ angular.module('shiitApp')
 	});
 
 	//$scope.stateClass = $scope.$parent.defaultStateClass;
-	$scope.$on('$viewContentLoaded', function(event, viewConfig){
-		console.log('a view was loaded');
-		console.log(event);
-		console.log(viewConfig);
+	$scope.$on('$viewContentLoaded', function(/*event, viewConfig*/){
 		$scope.$parent.stateName = localStateName;
 		// Access to all the view config properties.
 		// and one special property 'targetView'
