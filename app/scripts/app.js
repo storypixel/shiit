@@ -6,7 +6,7 @@ angular.module('shiitApp', [
   'ngSanitize',
   'ngRoute',
   'ui.router',
-  'timer',
+  'iansTimer',
   'shiitFilters'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
@@ -64,8 +64,18 @@ angular.module('shiitApp', [
   .run(function ($rootScope, $location, Auth) {
 
     // Redirect to login if route requires auth and you're not logged in
+    // $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    //   console.log('testy state change');
+    //   console.log(event);
+    //   console.log(toState);
+    //   console.log(toParams);
+    //   console.log(fromState);
+    //   console.log(fromParams);
+    // });
+
+    // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      
+      //console.log('testy route change');
       if (next.authenticate && !Auth.isLoggedIn()) {
         $location.path('/login');
       }

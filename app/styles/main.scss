@@ -48,11 +48,10 @@ $blue-deep: #061F47;
 $blue-bright: #5DE1E5;
 $blue-nobel: #006FA0;
 $blue-subtle: #094279;
-$blue-electric: hsl(180, 86%, 41%); // #0EC0C1;
-$orange-electric: hsl(360, 86%, 41%); // #0EC0C1;
-$green-electric: hsl(70, 86%, 41%); // #0EC0C1;
-$red-electric: hsl(355, 86%, 41%); // #0EC0C1;
-$blue-electric: hsl(70, 86%, 41%); // #0EC0C1;
+$blue-electric: hsl(180, 86%, 41%); // #;
+$orange-electric: hsl(37, 86%, 41%); // #;
+$green-electric: hsl(70, 86%, 41%); // #;
+$red-electric: hsl(5, 86%, 41%); // #;
 $green-light: #E7FFAC;
 $clr-button-primary: $baseline-color;
 $clr-border: $baseline-color;
@@ -60,6 +59,18 @@ $clr-button-background: transparent;
 $clr-button-color: $baseline-color;
 $clr-background: $blue-electric;
 $clr-text-secondary: $baseline-color;
+
+html{ height: 100%}
+
+body{
+//    font-size: 10em;
+	color: $baseline-color;
+	//line-height: $fs-normal * 3;
+	font-size: $fs-normal;
+	line-height: 1;
+	min-height: 100%;
+	@extend .big-serious;
+}
 
 input:focus,
 select:focus,
@@ -72,15 +83,22 @@ h1, h2, h3, h4, h5, h6{
 	font-size: inherit;
 	margin: 0;
 }
+h2{
+	//font-size: $fs-larger;
+	background-color: transparent; //cyan;
+	color: $clr-text-secondary;
+	margin: 0;
+	font-weight: normal;
+	//line-height: $fs-large;
+}
 
-body{
-//    font-size: 10em;
-	color: $baseline-color;
-	//line-height: $fs-normal * 3;
-	background-color: $clr-background;
-	font-size: $fs-normal;
-	line-height: 1;
-	@extend .big-serious;
+h3{
+	color: $gray-light;
+	font-weight: normal;
+	span{		
+		color: white;
+		font-weight: bold;
+	}
 }
 
 .timer{
@@ -90,6 +108,30 @@ body{
 		font-size: 64px;
 		//text-indent: 777px;
 		letter-spacing: 3px;
+	}
+}
+
+.sexy-back{
+	//background-color: $gray-moody;
+	bottom:0;
+	left:0;
+	position: absolute;
+	right:0;	
+	top:0;
+	z-index: -1;
+	text-indent: -9999em;
+	@include transition (background-color .25s ease-in-out);	
+	&.calibrating{
+		background-color: $gray-moody;
+	}
+	&.ready{
+		background-color: $orange-electric;
+	}
+	&.work{
+		background-color: $green-electric;
+	}
+	&.rest{
+		background-color: $red-electric;
 	}
 }
 
@@ -109,25 +151,6 @@ body{
 	padding-right: 0.9375rem;
 	float: left; 	
 }
-
-h2{
-	//font-size: $fs-larger;
-	background-color: transparent; //cyan;
-	color: $clr-text-secondary;
-	margin: 0;
-	font-weight: normal;
-	//line-height: $fs-large;
-}
-
-h3{
-	color: $gray-light;
-	font-weight: normal;
-	span{		
-		color: white;
-		font-weight: bold;
-	}
-}
-
 .button{
 	display: inline-block;
 	padding: 6px 12px;
@@ -160,7 +183,6 @@ h3{
 		padding-bottom: 7px;
 		//text-indent: 777px;
 	}
-
 }
 
 time{

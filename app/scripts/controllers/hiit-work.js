@@ -1,45 +1,55 @@
 'use strict';
 
 angular.module('shiitApp')
-.controller('HiitWorkCtrl', function ($scope, $http) {
+.controller('HiitWorkCtrl', function ($state, $scope, $http) {
 	$http.get('/api/awesomeThings').success(function(awesomeThings) {
 		$scope.awesomeThings = awesomeThings;
 	});
 
+	var localStateName = 'ready';
+
 	$scope.timerRunning = false;
+	$scope.$parent.stateName = localStateName;
+
+	$scope.startCountdown = function (){
+		console.log('starting startCountdown');
+		$scope.$broadcast('ians-timer:start');
+	};
 
 	$scope.startTimer = function (){
-		$scope.$broadcast('timer-start');
-		$scope.timerRunning = true;
+		$scope.$broadcast('ians-timer:start');
 	};
 
 	$scope.stopTimer = function (){
-		$scope.$broadcast('timer-stop');
-		$scope.timerRunning = false;
-	};
-
-	$scope.pauseTimer = function (){
-		$scope.$broadcast('timer-pause');
-		$scope.timerRunning = false;
-	};
-
-	$scope.resumeTimer = function (){
-		$scope.$broadcast('timer-resume');
-		$scope.timerRunning = true;
+		$scope.$broadcast('ians-timer:stop');
 	};
 	
-	$scope.add5Seconds = function () {
-		$scope.$broadcast('timer-add-cd-seconds', 5);
-	};
+	/// $scope.timerConsole = 'waiting...';
 
-	$scope.timerConsole = 'waiting...';
-	$scope.$on('timer-stopped', function (event, args) {
-		$scope.timerConsole += 'stopped';
-		console.log('-v-');
-		console.log(event);
-		console.log(args);
-		console.log('-0-');
-		$scope.digest();
-		//+= ' - event.name = '+ event.name + ', timeoutId = ' + args.timeoutId + ', millis = ' + args.millis +'\n';
+	$scope.$on('ians-timer:stopped', function () {
+		$scope.timerRunning = false;
+		// $scope.digest();		
 	});
+
+	$scope.$on('ians-timer:started', function () {
+		$scope.timerRunning = true;
+		// $scope.digest();
+	});
+
+	// the data sucks. get better data
+	$scope.$on('ians-timer:error-data', function () {
+		$state.transitionTo('hiit.calibrate');
+		// $scope.digest();
+	});
+
+	//$scope.stateClass = $scope.$parent.defaultStateClass;
+	$scope.$on('$viewContentLoaded', function(/*event, viewConfig*/){
+		console.log('hiit-work view was loaded');
+		$scope.$parent.stateName = localStateName;
+		$scope.startTimer();
+		// Access to all the view config properties.
+		// and one special property 'targetView'
+		// viewConfig.targetView 
+	});
+
 });
