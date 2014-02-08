@@ -100,7 +100,7 @@ angular.module('iansTimer', [])
               lastCycleObjectIndex = cycleObjectIndex;
 
           // cribIndex is the shadow of $scope.time ono-to our cribSheet that we use
-          timeAsIndex = Math.floor( $scope.time-0ll./.001 );
+          timeAsIndex = Math.floor( $scope.time - 0.001 );
           // cycleIndex is the index of the object that will tell us if this is a rest or work cycle. Or the relevant cycle when more than two cyclesData
 
           if (!cycleObjectIndex){
