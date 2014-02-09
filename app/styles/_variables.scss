@@ -1,0 +1,34 @@
+// SUCH VARIABLES
+$font-family-base: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+
+// hues
+$darkest: 				black;
+$lightest: 				white;
+$color-action: 			#3573BD;
+$color-action-dark: 	darken($color-action, 12%);
+
+// hues: grays
+$gray-darker:			lighten($darkest, 12.5%) !default; 
+$gray-dark:				lighten($darkest, 20%) !default;   
+$gray:					lighten($darkest, 33.3%) !default; 
+$gray-light:			lighten($darkest, 60%) !default;   
+$gray-lighter:			lighten($darkest, 92.5%) !default; 
+// todo: make rgba grays a mixin for degredation
+$gray-faded-lots:		rgba($darkest, 0.04);
+$gray-faded-some:		rgba($darkest, 0.1);
+$gray-faded:			rgba($darkest, 0.4);
+
+// type
+$font-size-small: 		12px;
+$font-size-base: 		14px; // BASE
+$font-size-big: 		18px;
+$font-size-bigger: 		24px;
+$line-height: 			1.4;
+
+// screen breakpoints
+$screen-small-minimum: 	 768px;
+$screen-midsize-minimum: 992px;
+$screen-big-minimum: 	 1200px;
+
+// etc
+$border-radius-base:	 4px;
