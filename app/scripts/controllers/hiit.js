@@ -1,13 +1,19 @@
 'use strict';
 
 angular.module('shiitApp')
-.controller('HiitCtrl', function ($state, $scope, HiitData) {
+.controller('HiitCtrl', function ($state, $scope, $timeout, HiitData) {
 	// $http.get('/api/awesomeThings').success(function(awesomeThings) {
 	// 	$scope.awesomeThings = awesomeThings;
 	// });
-	
+	var masterSound = new buzz.sound( 'sounds/master', { formats: [ 'mp3' ] }),
+			hintSoundRange = [3, 4],
+			roundStartSoundRange = [0, 2.8],
+			roundEndSoundRange = [10, 11],
+			doneSoundRange = [6, 8],
+			soundPromise;
 	// console.log('ok');
 	//console.log(HiitData);
+	//var buzz = buzz ? buzz : buzz; // this is a hack. I don't know the right way t o get angularjs to see buzzjs
 
 	$scope.data = HiitData.durationData();
 	//$scope.stateClass = 'default';
@@ -28,6 +34,24 @@ angular.module('shiitApp')
 			{'name' : 'work', 'value' : workTime},
 			{'name' : 'rest', 'value' : restTime}
 		];
+	}
+
+	function pauseSound(){
+		masterSound.pause();
+		soundPromise = undefined;
+	}
+
+	function playSound(range){
+		if ( angular.isDefined(soundPromise) ){
+			$timeout.cancel(soundPromise);
+		}
+		var startTime = range[0],
+				endTime = range[1],
+				ms = 1000 * (endTime - startTime);
+		// play a sound
+		masterSound.setTime(startTime).play();
+		// stop it after a time
+    soundPromise = $timeout(pauseSound, ms);
 	}
 
 	var workLimit = limitRange(5, 120),
@@ -77,21 +101,38 @@ angular.module('shiitApp')
 	// whenever it goes from rest to work or vice versa...
 	$scope.$on('ians-timer:cycle-changed', function (event, data) {
 		//console.log('ians-timer:cycle-changed event received');
-		console.log('current round changed to ' + data.round);
+		//console.log('current round changed to ' + data.round);
 		$scope.stateName = data.cycle;
 		$scope.currentRound = data.round;
+		if ($scope.stateName === 'work'){
+			playSound(roundStartSoundRange);
+			//soundGroup.play();			
+		} else {
+			playSound(roundEndSoundRange);
+		}
 		//console.log('ians-timer:cycle-changed end' + data.cycle);
 	});
 
-	// $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-	// 	// console.log('state change started');
-	// 	// console.log(event);
-	// 	// console.log(toState);
-	// 	// console.log(toParams);
-	// 	// console.log(fromState);
-	// 	// console.log(fromParams);
-	// 	// console.log('state change ended');
-	// });
+	// whenever it goes from rest to work or vice versa...
+	$scope.$on('ians-timer:finished', function () {
+		//console.log('ians-timer:cycle-changed event received');
+		//console.log('current round changed to ' + data.round);
+		playSound(doneSoundRange);
+		//console.log('ians-timer:cycle-changed end' + data.cycle);
+	});
+
+	// whenever it goes from rest to work or vice versa...
+	$scope.$on('ians-timer:tick', function (event, data) {
+		//console.log('ians-timer:cycle-changed event received');
+		console.log('current round changed to ' + data.time);
+		if ( (data.time < 4) && ($scope.stateName === 'rest') ){
+			//console.log('one of the last three seconds');
+			playSound(hintSoundRange);
+
+		}
+
+		//console.log('ians-timer:cycle-changed end' + data.cycle);
+	});
 
 	$scope.$watch('data.totalSeconds', function() {
 		$scope.data.cycle = updateCycle($scope.data.workSeconds, $scope.data.restSeconds);

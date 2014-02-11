@@ -29,9 +29,17 @@ angular.module('iansTimer', [])
         var stop,
         startingTime, // when the timer was started
         stoppingTime, // when the timer was last stopped. Useful when timer is "paused"
+        updateEvery = 250, // milliseconds
         currentRound,
         cribSheet,
-        cycleObjectIndex;
+        oldTime,
+        newTime,
+        cycleObjectIndex,
+        timeAsIndex,
+        cycleLength,
+        cycleName,
+        displayTime,
+        lastCycleObjectIndex;
 
         console.log('$scope.cycle');
         console.log($scope.cycle);
@@ -56,6 +64,7 @@ angular.module('iansTimer', [])
           cyclesLeftToAddToCribSheet = $scope.totalRounds * slen; // cycles are encoded as strings
           cycleObjectIndex = 0;
           currentRound = 0; // how many times we go through each set of cycles
+          oldTime = 0;
 
           // Make a cribsheet that a guide to know what cycle each second falls into
           cribSheet = []; // 
@@ -75,11 +84,7 @@ angular.module('iansTimer', [])
         // Update the time to the screen in a way that reflects current round and cycle
         function updateTime() {
     
-          var timeAsIndex,
-              cycleLength,
-              cycleName,
-              displayTime,
-              lastCycleObjectIndex = cycleObjectIndex;
+          lastCycleObjectIndex = cycleObjectIndex;
 
           /*jslint bitwise: true */ // ^ jslint was complaining about bitwise. turn that off.
           timeAsIndex = ($scope.time - 0.001) | 0; // would be a problem if time goes to -1 or less
@@ -103,9 +108,18 @@ angular.module('iansTimer', [])
           writeTime(displayTime + 1); // hits zero only when time has ran out
         }
 
-        // Put the time on the screen
+        // Put the time on the screen. not sure if this is the encapsulated way to do it
         function writeTime(t){
-          $element.text($filter('digitalTime')(t)); // never hits zero until all is complete
+          newTime = $filter('digitalTime')(t);
+          //$scope.sauce = t;
+          //$scope.$apply();
+          $element.text(newTime); // never hits zero until all is complete
+          if (oldTime !== newTime){
+            /*jslint bitwise: true */
+            $scope.$emit('ians-timer:tick', {'time' : t});
+            /*jslint bitwise: false */
+            oldTime = newTime;
+          }
         }
 
         // Watch a variable
@@ -127,6 +141,7 @@ angular.module('iansTimer', [])
             $scope.justStop(); // just stop, don't erase stop
             stop = undefined; // now erase stop
             writeTime(0);
+            $scope.$emit('ians-timer:finished');
           }
         };
 
@@ -152,14 +167,11 @@ angular.module('iansTimer', [])
         });
 
         $scope.$on('ians-timer:start', function(){
-          
           // If stop is already defined, we are resuming
           if ( angular.isDefined(stop) ){
-            console.log('resuming for real');
-            startingTime = startingTime + (Date.now() - stoppingTime);
+            startingTime += Date.now() - stoppingTime;
           } else {
             // Must be the first time the timer has ran, do it right
-            console.log('starting for real');
             initVariables();
           }
 
@@ -172,7 +184,7 @@ angular.module('iansTimer', [])
             } else {
               $scope.andDone();
             } // console.log('tick');
-          }, 200);
+          }, updateEvery);
 
           $scope.$emit('ians-timer:started');
 

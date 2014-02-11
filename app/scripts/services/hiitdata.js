@@ -10,9 +10,9 @@ angular.module('shiitApp')
       durationData: function(){
         return {
           preSeconds: 10,
-          workSeconds: 20,
-          restSeconds: 20,
-          numReps: 10
+          workSeconds: 5,
+          restSeconds: 5,
+          numReps: 2
         };
       }
     };

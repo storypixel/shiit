@@ -19,17 +19,6 @@ angular.module('shiitApp', [
       .state('hiit', {
         url: '/hiit',
         abstract: true,
-        // Note to self: I don't know what the fuck this actually does vs a factory
-        // resolve: {
-        //   durationData:  function(){
-        //     return {
-        //       workSeconds: 30,
-        //       restSeconds: 30,
-        //       numReps: 10,
-        //       totalSeconds: 0
-        //     };
-        //   }
-        // },
         templateUrl: 'partials/hiit.html',
         controller: 'HiitCtrl'
       })
