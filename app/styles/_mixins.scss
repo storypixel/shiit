@@ -1,32 +1,45 @@
+@mixin media($breakpoint) {
+    @media only screen and (max-width: $breakpoint) { @content; }
+}
+
+@mixin transition($properties: all, $duration: .3s, $easing: ease-out) {
+    @if length($properties) > 1 {
+        transition-property: $properties;
+        transition-duration: $duration;
+        transition-timing-function: $easing;
+    } @else {
+        transition: $properties $duration $easing;
+    }
+}
+
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after { clear: both; }
+}
+
 // Left out moz because it's a small %
 @mixin box-shadow($top, $left, $blur, $spread, $color, $inset:"") {
-	-webkit-box-shadow: $top $left $blur $spread $color #{$inset};
-	box-shadow: $top $left $blur $spread $color #{$inset};
+    -webkit-box-shadow: $top $left $blur $spread $color #{$inset};
+    box-shadow: $top $left $blur $spread $color #{$inset};
 }
 
 // Left out moz because it's a small %
 @mixin border-radius($radius) {
-	-webkit-border-radius: $radius;
-	border-radius: $radius;
-}
-
-// TODO
-@mixin clearfix() {
-	&:before,
-	&:after {
-		content: " ";
-		display: table;
-	}
-	&:after { clear: both; }
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
 }
 
 // Not consistently supported, including all prefixes
 @mixin user-select($type) {
-	-webkit-user-select: $type;
-	-moz-user-select: $type;
-	-ms-user-select: $type;
-	-o-user-select: $type;
-	user-select: $type;
+    -webkit-user-select: $type;
+    -moz-user-select: $type;
+    -ms-user-select: $type;
+    -o-user-select: $type;
+    user-select: $type;
 }
 
 // WIP
@@ -36,11 +49,11 @@
 $gutter: 15px; // Variable for columns. Can key off this more TODO
 
 @mixin col($span){
-	float: left;
-	min-height: 1px;
-	padding-left: $gutter;
-	padding-right: $gutter;	
-	position: relative;
+    float: left;
+    min-height: 1px;
+    padding-left: $gutter;
+    padding-right: $gutter; 
+    position: relative;
     width: 100/12 * $span * 1%; // Could make 12 a variable?
 }
 

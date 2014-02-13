@@ -1,31 +1,27 @@
-@import "../bower_components/bourbon/app/assets/stylesheets/bourbon";
-@import "settings/neat";
-@import "../bower_components/neat/app/assets/stylesheets/neat";
-@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
-//@import url(http://basehold.it/24);
-/*
-HelveticaNeueLTPro-BdCn.otf
-HelveticaNeueLTPro-Cn.otf
-HelveticaNeueLTPro-LtCn.otf
-HelveticaNeueLTPro-MdCn.otf
-HelveticaNeueLTPro-ThCn.otf
-*/
+@import "normalize";
+@import "mixins";
+
+$gray: #666;
+$tablet-width: 768px;
+$mobile-width: 488px;
+
+@import url(http://basehold.it/24);
 
 @font-face {
-	font-family: HelveticaSauce;
-	src: url("/fonts/HelveticaNeueLTPro-UltLtCn.otf") format("opentype");
+    font-family: HelveticaSauce;
+    src: url("/fonts/HelveticaNeueLTPro-UltLtCn.otf") format("opentype");
 }
 
 @font-face {
-	font-family: HelveticaSauce;
-	font-weight: bold;
-	src: url("/fonts/HelveticaNeueLTPro-MdCn.otf") format("opentype");
+    font-family: HelveticaSauce;
+    font-weight: bold;
+    src: url("/fonts/HelveticaNeueLTPro-MdCn.otf") format("opentype");
 }
 
 $fs-normal: 14px;
-$fs-small: golden-ratio($fs-normal,  -1);
+$fs-small: 12px;
 $fs-large: 24px;
-$fs-larger: 32px;
+$fs-larger: 42px;
 $fs-largest: 48*2px; //golden-ratio($fs-normal,  4);
 
 // Grays
@@ -36,8 +32,8 @@ $gray-dark:              lighten(#000, 20%) !default;   // #333
 $gray:                   lighten(#000, 33.5%) !default; // #555
 $gray-light:             lighten(#000, 60%) !default;   // #999
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
-$white-faded-tons:     rgba(#FFF, .05) !default; // #555
-$white-faded-some:    	 rgba(#FFF, .5) !default; // #555
+$white-faded-tons:       rgba(#FFF, .05) !default; // #555
+$white-faded-some:       rgba(#FFF, .5) !default; // #555
 $white-faded-barely:     rgba(#FFF, .8) !default; // #555
 
 // Brand colors
@@ -64,314 +60,311 @@ $clr-button-color: $baseline-color;
 $clr-background: $blue-electric;
 $clr-text-secondary: $baseline-color;
 
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
 html{ height: 100%}
 
 body{
+    margin: 0;
 //    font-size: 10em;
-	color: $baseline-color;
-	//line-height: $fs-normal * 3;
-	font-size: $fs-normal;
-	line-height: 1;
-	min-height: 100%;
-	@extend .big-serious;
-}
-
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none;
+    color: $baseline-color;
+    //line-height: $fs-normal * 3;
+    font-size: $fs-normal;
+    line-height: 1;
+    min-height: 100%;
+    @extend .big-serious;
 }
 
 h1, h2, h3, h4, h5, h6{
-	font-size: inherit;
-	margin: 0;
+    font-size: inherit;
+    margin: 0;
 }
 h2{
-	//font-size: $fs-larger;
-	background-color: transparent; //cyan;
-	color: $clr-text-secondary;
-	margin: 0;
-	font-weight: normal;
-	//line-height: $fs-large;
+    //font-size: $fs-larger;
+    background-color: transparent; //cyan;
+    color: $clr-text-secondary;
+    margin: 0;
+    font-weight: normal;
+    //line-height: $fs-large;
 }
 
 h3{
-	color: $white-faded-some;
-	font-weight: normal;
-	span{		
-		color: white;
-		font-weight: bold;
-	}
-}
-
-.timer{
-	font-size: $fs-larger;
-	letter-spacing: 1px;
-	@include media($tablet-width) {
-		font-size: 64px;
-		//text-indent: 777px;
-		letter-spacing: 3px;
-	}
-	*{ -webkit-user-select: none; user-select: none; }
-}
-
-.sexy-back{
-	//background-color: $gray-moody;
-	bottom:0;
-	left:0;
-	position: absolute;
-	right:0;	
-	top:0;
-	z-index: -1;
-	text-indent: -9999em;
-	@include transition (background-color .25s ease-in-out);	
-	&.calibrating{
-		background-color: $gray-moody;
-	}
-	&.ready{
-		background-color: $orange-electric;
-	}
-	&.work{
-		background-color: $green-electric;
-	}
-	&.rest{
-		background-color: $red-electric;
-	}
-}
-
-.row{
-    //background: red;
-    width: 100%;
-    @include outer-container;
-    &:before, &:after{
-    	content: " ";
-    	display: table;    	
+    color: $white-faded-some;
+    font-weight: normal;
+    span{       
+        color: white;
+        font-weight: bold;
     }
 }
 
-.col{
-	position: relative;
-	padding-left: 0.9375rem;
-	padding-right: 0.9375rem;
-	float: left; 	
+footer{ 
+    @include col-wrap;
 }
+
+.timer{
+    font-size: $fs-larger;
+    letter-spacing: 1px;
+    @include col(12);
+    @media(min-width: $tablet-width) {
+        //font-size: 64px;
+        //text-indent: 777px;
+        letter-spacing: 3px;
+    }
+    *{ -webkit-user-select: none; user-select: none; }
+}
+
+.sexy-back{
+    //background-color: $gray-moody;
+    bottom:0;
+    left:0;
+    position: absolute;
+    right:0;    
+    top:0;
+    z-index: -1;
+    text-indent: -9999em;
+    @include transition (background-color .25s ease-in-out);    
+    &.calibrating{
+        background-color: $gray-moody;
+    }
+    &.ready{
+        background-color: $orange-electric;
+    }
+    &.work{
+        background-color: $green-electric;
+    }
+    &.rest{
+        background-color: $red-electric;
+    }
+}
+
 .button{
-	background-color: transparent;
-	display: inline-block;
-	padding: 6px 12px;
-	margin-bottom: 0;
-	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	cursor: pointer;
-	background-image: none;
-	border: 1px solid transparent;
-	border-radius: 4px;
-	-webkit-user-select: none;
+    background-color: transparent;
+    display: inline-block;
+    //padding: 6px 12px;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-user-select: none;
 }
 
 .button-default{
-	color: $baseline-color;
-	//background-color: #fff;
-	border-color: $clr-button-border;		
+    color: $baseline-color;
+    //background-color: #fff;
+    border-color: $clr-button-border;       
 }
 
 .big-serious{
-	font-family: HelveticaSauce, "Open Sans Condensed", sans-serif;
-	text-transform: uppercase;
+    font-family: HelveticaSauce, "Open Sans Condensed", sans-serif;
+    text-transform: uppercase;
 }
 
+
 .dimension, .total-time{
-	padding-top: 24px;
-	padding-bottom: 15px;		
-	@include media($tablet-width) {
-		padding-bottom: 7px;
-		//text-indent: 777px;
-	}
+    padding-top: 15px;
+    padding-bottom: 15px;       
+    @media(min-width: $tablet-width) {
+        //padding-bottom: 7px;
+        //text-indent: 777px;
+
+    }
 }
 
 time{
-	text-align: right;
-	font-weight: bold;
-}	
+    text-align: right;
+    font-weight: bold;
+}   
 
 button{
-	@extend .button;
-	@extend .button-default;
-	@extend .big-serious;	
-	&.action{
-		//background-color: white;
-		background-color: $clr-button-background;
-		color: $white-faded-barely;
-		border-color: $clr-button-border;
-		padding: 8px 12px 0px;
-	}	
-	&.less, &.more{
-		background-color: transparent;				
-		background-position: center center;
-		background-repeat: no-repeat;
-		border-radius: 50%;
-		background-size: 50%;
-		padding: 0;
-		text-indent: -9999em;
-		width: 42px;
-		height: 42px;
-		@include media($tablet-width) {
-			width: 64px;
-			height: 64px;
-		}
+    @extend .button;
+    @extend .button-default;
+    @extend .big-serious;   
+    &.action{
+        //background-color: white;
+        background-color: $clr-button-background;
+        color: $white-faded-barely;
+        border-color: $clr-button-border;
+        padding: 12px 12px 0px;
+    }   
+    &.less, &.more{
+        background-color: transparent;              
+        background-position: center center;
+        background-repeat: no-repeat;
+        border-radius: 50%;
+        background-size: 50%;
+        padding: 0;
+        text-indent: -9999em;
+        width: 42px;
+        height: 42px;
+        // @media(min-width: $tablet-width) {
+        //     width: 64px;
+        //     height: 64px;
+        // }
 
-	}
-	&.less{
-		background-image: url(/images/minusFFFFFF.svg);
-		//right: 0;
-	}
-	&.more{
-		background-image: url(/images/plusFFFFFF.svg);		
-	}
-	& + &{
-		// when one button follows another
-		margin-left: $fs-small;
-	}
-	&.verbal{
-		font-weight: bold;
-		height: 48px;
-		@include media($tablet-width) {
-			height: 96px;
-			padding: 18px 12px 0;
-		}		
-	}
-	@include transition (all .25s ease-in-out);
-	&:hover{
-		color: $baseline-color;
-		background-color: $white-faded-tons;		
-		border-color: $white-faded-some;
-	}
+    }
+    &.less{
+        background-image: url(/images/minusFFFFFF.svg);
+        //right: 0;
+    }
+    &.more{
+        background-image: url(/images/plusFFFFFF.svg);      
+    }
+    & + &{
+        // when one button follows another
+        margin-left: $fs-small;
+    }
+    &.verbal{
+        font-weight: bold;
+        height: 48px;
+        @media(min-width: $tablet-width) {
+            height: 96px;
+            padding: 14px 30px 0;
+        }       
+    }
+    @include transition (all .25s ease-in-out);
+    &:hover{
+        color: $baseline-color;
+        background-color: $white-faded-tons;        
+        border-color: $white-faded-some;
+    }
 }
 
 /* LAYOUT */
 .dimension{
-	border-bottom: 1px $clr-border solid;
-	//font-size: $fs-large;
-	>h2, >nav, >time, >aside{
-		@extend .col;		
-	}
-	>h2{
-		@include span-columns(3);
-		//@extend .big-serious;
-		.at-work &{
-			@include span-columns(7);			
-		}
-	}
-	>time{
-		@include span-columns(4);
-	}
+    border-bottom: 1px $clr-border solid;
+    @include col-wrap;
+    >h2{
+        @include col(3);
+        //@extend .big-serious;
+        .at-work &{
+            @include col(7);           
+        }
+    }
+    >time{
+        @include col(4);
+    }
 
-	&.repeat time{
-		&:after{
-			color: $baseline-color;
-			content: "x";
-			font-size: $fs-larger;
-			text-transform: none;
-			font-weight: normal;
-			position: absolute;
-			right: 0;
-		}
-	}
+    &.repeat time{
+        &:after{
+            color: $baseline-color;
+            content: "x";
+            font-size: $fs-larger;
+            text-transform: none;
+            font-weight: normal;
+            position: absolute;
+            right: 0;
+        }
+    }
 
-	>nav{ 
-		text-align: right;
-		//font-size: $fs-large;
-		margin-top: -10px;
-		@include span-columns(5); 
-		@include media($tablet-width) {
-			margin-bottom: -8px;
-			//text-indent: 777px;
-		}	
-	}
-	>aside{
-		text-align: right;
-		@include span-columns(5);		
-	}
-	>nav, >time, >h2{
-		@extend .col;
-		@include media($tablet-width) {	
-			@include span-columns(4);
-		}			
-	}	
-}
-
-.big-time{
-	padding-bottom: 0;
-	time{
-		text-align: center;
-		font-size: $fs-largest;
-		@include media($tablet-width) {
-			font-size: $fs-largest * 2;
-			height: 166px;			
-		}		
-		@include span-columns(12);
-	}
-}
-
-.touch-zone{
-	nav{
-		text-align: center;
-		margin-top: 0;
-		@include span-columns(12); 		
-	}
+    >nav{ 
+        text-align: right;
+        //font-size: $fs-large;
+        //margin-top: -10px;
+        @include col(5); 
+        @media(min-width: $tablet-width) {
+            //margin-bottom: -8px;
+            //text-indent: 777px;
+        }   
+    }
+    >aside{
+        text-align: right;
+        @include col(5);       
+    }
+    >h2, >time{
+        line-height: 1.3;
+    }
+    >nav, >time, >h2{
+        height: 42px;
+        @include col(4);
+        @media(min-width: $tablet-width) { 
+            @include col(4);
+        }           
+    }   
 }
 
 .total-time{
-	h2{
-		display: none;
-		@include media($tablet-width) {
-			display: block;
-			@include span-columns(4);
-		}
-	}
-	time{
-		text-align: left;
-		@include span-columns(7);
-		@include media($tablet-width) {
-			font-size: $fs-largest * 2;
-			height: 166px;
-			position: relative;
-			text-align: right;
-			span{
-				position: absolute;
-				right: 0;
-			}	
-			//@include span-columns(3);
-		}		
-	}
-	nav{ 
-		margin-top: 0;
-		text-align: right;
-		@include span-columns(5);
-		.at-work &{
-			text-align: center;
-			@include span-columns(12);				
-			// @include media($tablet-width) {	
-			// 	margin-top: -12px;			
-			// }
-		}
-		.at-rest &{	
-			margin-top: -12px;			
-			@include media($tablet-width) {	
-				margin-top: 0;
-			}
-		}
-	}
-	>nav, >time, >h2{
-		@extend .col;
-		@include media($tablet-width) {	
-			@include span-columns(4);
-		}			
-	}	
+    h2{
+        display: none;
+        @media(min-width: $tablet-width) {
+            display: block;
+        }
+    }
+    time{
+        text-align: left;
+        @include col(7);
+        @media(min-width: $tablet-width) {
+            font-size: $fs-largest * 2;
+            height: 166px;
+            position: relative;
+            text-align: right;
+            span{
+                position: absolute;
+                right: 0;
+            }   
+            //@include col(3);
+        }       
+    }
+    nav{ 
+        margin-top: 0;
+        text-align: right;
+        @include col(5);
+        .at-work &{
+            text-align: center;
+            @include col(12);              
+            // @media(min-width: $tablet-width) {  
+            //  margin-top: -12px;          
+            // }
+        }
+        .at-rest &{ 
+            //margin-top: -12px;          
+            @media(min-width: $tablet-width) { 
+                margin-top: 0;
+            }
+        }
+    }
+    >nav, >time, >h2{
+        @include col(6);
+        @media(min-width: $tablet-width) { 
+            @include col(4);
+        }           
+    }   
 }
 
+
+
+.big-time{
+    //padding-bottom: 0;
+    time{
+        text-align: center;
+        font-size: $fs-largest;
+        line-height: 1.2;
+        height: 88px;
+
+        @media(min-width: $tablet-width) {
+            font-size: $fs-largest * 2;
+            height: 166px;          
+        }       
+        @include col(12);
+    }
+}
+
+.touch-zone{
+    nav{
+        text-align: center;
+        margin-top: 0;
+        @include col(12);      
+    }
+}
+
+
 nav{
-	line-height: 0;
+    line-height: 0;
 }

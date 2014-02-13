@@ -12,7 +12,8 @@ $gray-darker:			lighten($darkest, 12.5%) !default;
 $gray-dark:				lighten($darkest, 20%) !default;   
 $gray:					lighten($darkest, 33.3%) !default; 
 $gray-light:			lighten($darkest, 60%) !default;   
-$gray-lighter:			lighten($darkest, 92.5%) !default; 
+$gray-lighter:			lighten($darkest, 77.6%) !default;   
+$gray-lightest:			lighten($darkest, 92.5%) !default; 
 // todo: make rgba grays a mixin for degredation
 $gray-faded-lots:		rgba($darkest, 0.04);
 $gray-faded-some:		rgba($darkest, 0.1);
@@ -23,6 +24,7 @@ $font-size-small: 		12px;
 $font-size-base: 		14px; // BASE
 $font-size-big: 		18px;
 $font-size-bigger: 		24px;
+$font-size-biggest: 	30px;
 $line-height: 			1.4;
 
 // screen breakpoints

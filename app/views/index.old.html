@@ -9,12 +9,10 @@
     <base href="/">
     <title></title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, maximum-scale=1">    
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(app) styles/vendor.css -->
     <!-- bower:css -->
-    <!-- endbower -->    
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
@@ -27,10 +25,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-<!--     <p>views</p>
-    <a ui-sref="hiit.calibrate">calibrate</a>
-    <a ui-sref="hiit.work">Second</a> -->
-    <div class="container" ui-view></div>
+    <div class="container" ng-view=""></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -60,23 +55,17 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->    
-    <script src="scripts/other/ians-timer.js"></script>
-    <script src="scripts/filters.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/navbar.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/controllers/signup.js"></script>
-    <script src="scripts/controllers/settings.js"></script>
-    <script src="scripts/controllers/hiit.js"></script>
-    <script src="scripts/controllers/hiit-work.js"></script>
-    <script src="scripts/controllers/hiit-calibrate.js"></script>
-    <script src="scripts/services/auth.js"></script>
-    <script src="scripts/services/session.js"></script>
-    <script src="scripts/services/user.js"></script>
-    <script src="scripts/services/hiitdata.js"></script>
-    <script src="scripts/directives/mongooseError.js"></script>
-    <!-- endbuild -->
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/navbar.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/signup.js"></script>
+        <script src="scripts/controllers/settings.js"></script>
+        <script src="scripts/services/auth.js"></script>
+        <script src="scripts/services/session.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/directives/mongooseError.js"></script>
+        <!-- endbuild -->
 </body>
 </html>

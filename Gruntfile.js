@@ -1,4 +1,4 @@
-// Generated on <%= (new Date).toISOString().split('T')[0] %> using <%= pkg.name %> <%= pkg.version %>
+// Generated on 2014-02-12 using generator-angular-fullstack 1.2.5
 'use strict';
 
 // # Globbing
@@ -74,8 +74,7 @@ module.exports = function (grunt) {
         ],
       
         options: {
-          livereload: true,
-          nospawn: false
+          livereload: true
         }
       },
       express: {
