@@ -122,7 +122,9 @@ module.exports = function (grunt) {
             '.tmp',
             '<%= yeoman.dist %>/views/*',
             '<%= yeoman.dist %>/public/*',
-            '!<%= yeoman.dist %>/public/.git*',
+            '!<%= yeoman.dist %>/public/.git*'
+            //,
+            //'!<%= yeoman.dist %>/public/sounds/*.*'
           ]
         }]
       },
@@ -307,7 +309,20 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>/views',
           dest: '<%= yeoman.dist %>/views',
           src: '**/*.jade'
-        }, {
+        }, 
+        {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>/sounds',
+          dest: '<%= yeoman.dist %>/public/sounds',
+          src: [
+            '**/*.{mp3,wav,ogg}',
+            '*.{mp3,wav,ogg}',
+            '{,*/}*.mp3',
+            '*.*'
+          ]
+        }, 
+        {
           expand: true,
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/public/images',
@@ -341,7 +356,7 @@ module.exports = function (grunt) {
       dist: [
         'compass:dist',
         'imagemin',
-        'svgmin',
+        //'svgmin',
         'htmlmin'
       ]
     },

@@ -211,11 +211,11 @@ button{
 
     }
     &.less{
-        background-image: url(/images/minusFFFFFF.svg);
+        background-image: url(../images/minusFFFFFF.svg);
         //right: 0;
     }
     &.more{
-        background-image: url(/images/plusFFFFFF.svg);      
+        background-image: url(../images/plusFFFFFF.svg);      
     }
     & + &{
         // when one button follows another
