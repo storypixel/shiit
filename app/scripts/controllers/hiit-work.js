@@ -41,8 +41,10 @@ angular.module('shiitApp')
 
 	//$scope.stateClass = $scope.$parent.defaultStateClass;
 	$scope.$on('$viewContentLoaded', function(/*event, viewConfig*/){
-		console.log('hiit-work view was loaded');
+		//console.log('hiit-work view was loaded');
 		$scope.$parent.stateName = localStateName;
+		console.log('inspecting data cycle stuff');
+		console.log($scope.$parent.data.cycle);
 		$scope.startTimer();
 		// Access to all the view config properties.
 		// and one special property 'targetView'

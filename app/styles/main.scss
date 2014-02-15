@@ -1,11 +1,8 @@
 @import "normalize";
+@import "variables";
 @import "mixins";
 
-$gray: #666;
-$tablet-width: 768px;
-$mobile-width: 488px;
-
-@import url(http://basehold.it/24);
+//@import url(http://basehold.it/24);
 
 @font-face {
     font-family: HelveticaSauce;
@@ -17,48 +14,6 @@ $mobile-width: 488px;
     font-weight: bold;
     src: url("/fonts/HelveticaNeueLTPro-MdCn.otf") format("opentype");
 }
-
-$fs-normal: 14px;
-$fs-small: 12px;
-$fs-large: 24px;
-$fs-larger: 42px;
-$fs-largest: 48*2px; //golden-ratio($fs-normal,  4);
-
-// Grays
-// -------------------------
-
-$gray-darker:            lighten(#000, 13.5%) !default; // #222
-$gray-dark:              lighten(#000, 20%) !default;   // #333
-$gray:                   lighten(#000, 33.5%) !default; // #555
-$gray-light:             lighten(#000, 60%) !default;   // #999
-$gray-lighter:           lighten(#000, 93.5%) !default; // #eee
-$white-faded-tons:       rgba(#FFF, .05) !default; // #555
-$white-faded-some:       rgba(#FFF, .5) !default; // #555
-$white-faded-barely:     rgba(#FFF, .8) !default; // #555
-
-// Brand colors
-// -------------------------
-
-$brand-primary:         #428bca !default;
-
-$baseline-color: white;
-$gray-moody: #272822;
-$blue-deep: #061F47;
-$blue-bright: #5DE1E5;
-$blue-nobel: #006FA0;
-$blue-subtle: #094279;
-$blue-electric: hsl(180, 86%, 41%); // #;
-$orange-electric: hsl(37, 86%, 41%); // #;
-$green-electric: hsl(70, 86%, 41%); // #;
-$red-electric: hsl(5, 86%, 41%); // #;
-$green-light: #E7FFAC;
-$clr-button-primary: $baseline-color;
-$clr-button-border: $baseline-color;
-$clr-border: $white-faded-some;
-$clr-button-background: transparent;
-$clr-button-color: $baseline-color;
-$clr-background: $blue-electric;
-$clr-text-secondary: $baseline-color;
 
 *, *:before, *:after {
   -moz-box-sizing: border-box;
@@ -153,6 +108,7 @@ footer{
     background-image: none;
     border: 1px solid transparent;
     border-radius: 4px;
+    outline: none;
     -webkit-user-select: none;
 }
 
@@ -180,7 +136,11 @@ footer{
 
 time{
     text-align: right;
-    font-weight: bold;
+    .total-time &, 
+    .big-time &{
+        font-weight: bold;
+    }
+    //font-weight: bold;
 }   
 
 button{
@@ -217,7 +177,7 @@ button{
     &.more{
         background-image: url(../images/plusFFFFFF.svg);      
     }
-    & + &{
+    &:not(.ng-hide) + &{
         // when one button follows another
         margin-left: $fs-small;
     }
@@ -240,12 +200,26 @@ button{
 /* LAYOUT */
 .dimension{
     border-bottom: 1px $clr-border solid;
+    line-height: 1.7;
+    max-height: $vertical-unit * 3;
     @include col-wrap;
+    &.big-time{
+        max-height: $vertical-unit * 5;   
+        @media(min-width: $tablet-width) { 
+            max-height: $vertical-unit * 8;   
+        }             
+    }
     >h2{
         @include col(3);
         //@extend .big-serious;
         .at-work &{
             @include col(7);           
+        }
+        span{
+            display: none;
+            @media(min-width: $tablet-width) { 
+                display: inline;  
+            }              
         }
     }
     >time{
@@ -254,16 +228,30 @@ button{
 
     &.repeat time{
         &:after{
-            color: $baseline-color;
-            content: "x";
-            font-size: $fs-larger;
-            text-transform: none;
-            font-weight: normal;
-            position: absolute;
-            right: 0;
+            @media(min-width: $tablet-width) { 
+                color: $white-faded-some;
+                content: "x";
+                font-size: $fs-larger;
+                text-transform: none;
+                font-weight: normal;
+                position: absolute;
+                right: 0;
+            } 
         }
     }
 
+    >aside{
+        text-align: right;
+        @include col(5);       
+    }
+    >nav, >time, >h2{
+        height: 42px;
+        @media(min-width: $tablet-width) { 
+            @include col(4);
+        }           
+    }
+    >h2{ @include col(3); }
+    >time{ @include col(4); }
     >nav{ 
         text-align: right;
         //font-size: $fs-large;
@@ -273,21 +261,7 @@ button{
             //margin-bottom: -8px;
             //text-indent: 777px;
         }   
-    }
-    >aside{
-        text-align: right;
-        @include col(5);       
-    }
-    >h2, >time{
-        line-height: 1.3;
-    }
-    >nav, >time, >h2{
-        height: 42px;
-        @include col(4);
-        @media(min-width: $tablet-width) { 
-            @include col(4);
-        }           
-    }   
+    }    
 }
 
 .total-time{
@@ -299,12 +273,12 @@ button{
     }
     time{
         text-align: left;
-        @include col(7);
         @media(min-width: $tablet-width) {
             font-size: $fs-largest * 2;
             height: 166px;
             position: relative;
             text-align: right;
+            @include col(5);
             span{
                 position: absolute;
                 right: 0;
@@ -335,22 +309,35 @@ button{
         @media(min-width: $tablet-width) { 
             @include col(4);
         }           
-    }   
+    }
+    >nav{
+        @media(min-width: $tablet-width) { 
+            @include col(5);
+        }      
+    }
+    >time{
+        @media(min-width: $tablet-width) { 
+            @include col(5);
+        }      
+    }
+    >h2{
+        @media(min-width: $tablet-width) { 
+            @include col(2);
+        }      
+    }        
 }
-
-
 
 .big-time{
     //padding-bottom: 0;
     time{
-        text-align: center;
         font-size: $fs-largest;
-        line-height: 1.2;
         height: 88px;
-
+        line-height: 1;
+        padding-top: 8px;
+        text-align: center;
         @media(min-width: $tablet-width) {
             font-size: $fs-largest * 2;
-            height: 166px;          
+            height: 160px;          
         }       
         @include col(12);
     }

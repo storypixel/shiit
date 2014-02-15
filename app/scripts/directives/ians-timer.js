@@ -36,6 +36,7 @@ angular.module('iansTimer', [])
         newTime,
         cycleObjectIndex,
         timeAsIndex,
+        sumOfTime,
         cycleLength,
         cycleName,
         displayTime,
@@ -47,24 +48,30 @@ angular.module('iansTimer', [])
         function initVariables() {
           if (!angular.isDefined( $scope.cyclesData )){
             $scope.$emit('ians-timer:error-data');
+            console.log('cycles data is not defined, that is an error');
             return;
           }
 
-          var sumOfTime = 0,
-          slen,
+          var slen,
           cyclesLeftToAddToCribSheet,
           currentIndex,
           stackOverflowTrick;
 
+          sumOfTime = 0
           slen = $scope.cyclesData.length;
           // Assign round length in seconds
-          angular.forEach( $scope.cyclesData, function(obj){ sumOfTime += obj.value; });
+
+          angular.forEach( $scope.cyclesData, function(obj){ 
+            sumOfTime += obj.value; 
+            obj.cumulativeValue = sumOfTime; // this helps calculate time visually
+          });
           $scope.targetSeconds = sumOfTime * $scope.totalRounds;
           $scope.time = $scope.targetSeconds;
           cyclesLeftToAddToCribSheet = $scope.totalRounds * slen; // cycles are encoded as strings
           cycleObjectIndex = 0;
           currentRound = 0; // how many times we go through each set of cycles
           oldTime = 0;
+          cycleLength = 0;
 
           // Make a cribsheet that a guide to know what cycle each second falls into
           cribSheet = []; // 
@@ -76,6 +83,10 @@ angular.module('iansTimer', [])
           }
           // make cribSheet a string. this could support only 10 non-readytime states
           cribSheet = cribSheet.join('');
+
+          console.log('cycles data inside init variables');
+          console.log($scope.cyclesData);
+          console.log(cribSheet);
 
           stoppingTime = undefined; // we haven't stopped yet          
           startingTime = Date.now(); // we start now
@@ -96,7 +107,10 @@ angular.module('iansTimer', [])
           // how long the current cycle is in seconds. 
           cycleLength = +$scope.cyclesData[ cycleObjectIndex ].value; // the + in front converts to number      
           cycleName   = $scope.cyclesData[ cycleObjectIndex ].name; // determine this cycle's name
-          displayTime = timeAsIndex % cycleLength; // what the user should see   
+          
+          console.log('cycleLength is now '+cycleLength + ', name is '+cycleName);
+          displayTime = timeAsIndex % $scope.cyclesData[ cycleObjectIndex ].cumulativeValue; // what the user should see   
+          console.log('displayTime is now '+displayTime + ', by taking '+timeAsIndex + ' modolu cycleLength^');
 
           // If the cycleobjectindex changes,that means we went to a new cycle eg. to rest or to work
           if (cycleObjectIndex !== lastCycleObjectIndex){
@@ -172,6 +186,7 @@ angular.module('iansTimer', [])
             startingTime += Date.now() - stoppingTime;
           } else {
             // Must be the first time the timer has ran, do it right
+            console.log('initting the variables');
             initVariables();
           }
 
@@ -191,9 +206,9 @@ angular.module('iansTimer', [])
         });
 
         // observe changes to interpolated attribute
-        $attrs.$observe('seconds', function(value) {
-          console.log('seconds has changed value to ' + value);
-        });
+        // $attrs.$observe('seconds', function(value) {
+        //   console.log('seconds has changed value to ' + value);
+        // });
 
       }]
     };

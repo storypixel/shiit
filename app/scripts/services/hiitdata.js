@@ -11,7 +11,7 @@ angular.module('shiitApp')
         return {
           preSeconds: 10,
           workSeconds: 5,
-          restSeconds: 5,
+          restSeconds: 10,
           numReps: 2
         };
       }

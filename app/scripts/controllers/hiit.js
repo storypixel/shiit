@@ -16,6 +16,7 @@ angular.module('shiitApp')
 	//var buzz = buzz ? buzz : buzz; // this is a hack. I don't know the right way t o get angularjs to see buzzjs
 
 	$scope.data = HiitData.durationData();
+
 	//$scope.stateClass = 'default';
 	function limitRange (a, b) {
 		return function (n) {
@@ -56,7 +57,7 @@ angular.module('shiitApp')
 
 	var workLimit = limitRange(5, 120),
 		restLimit = limitRange(0, 60),
-		repsLimit = limitRange(1, 40);
+		repsLimit = limitRange(1, 90);
 
 
 	//$scope.data.totalSeconds = ($scope.data.workSeconds + $scope.data.restSeconds) * $scope.data.numReps;
@@ -124,11 +125,10 @@ angular.module('shiitApp')
 	// whenever it goes from rest to work or vice versa...
 	$scope.$on('ians-timer:tick', function (event, data) {
 		//console.log('ians-timer:cycle-changed event received');
-		console.log('current round changed to ' + data.time);
+		//console.log('current second changed to ' + data.time);
 		if ( (data.time < 4) && ($scope.stateName === 'rest') ){
 			//console.log('one of the last three seconds');
 			playSound(hintSoundRange);
-
 		}
 
 		//console.log('ians-timer:cycle-changed end' + data.cycle);
@@ -136,6 +136,7 @@ angular.module('shiitApp')
 
 	$scope.$watch('data.totalSeconds', function() {
 		$scope.data.cycle = updateCycle($scope.data.workSeconds, $scope.data.restSeconds);
+		console.log('data.totalSeconds got an update');
 		//$scope.data.totalSeconds = ($scope.data.workSeconds + $scope.data.restSeconds) * $scope.data.numReps;
 	});
 });
