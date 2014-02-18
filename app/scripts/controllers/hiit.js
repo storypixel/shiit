@@ -52,7 +52,7 @@ angular.module('shiitApp')
 		// play a sound
 		masterSound.setTime(startTime).play();
 		// stop it after a time
-    soundPromise = $timeout(pauseSound, ms);
+		soundPromise = $timeout(pauseSound, ms);
 	}
 
 	var workLimit = limitRange(5, 120),
@@ -103,14 +103,23 @@ angular.module('shiitApp')
 	$scope.$on('ians-timer:cycle-changed', function (event, data) {
 		//console.log('ians-timer:cycle-changed event received');
 		//console.log('current round changed to ' + data.round);
-		$scope.stateName = data.cycle;
 		$scope.currentRound = data.round;
-		if ($scope.stateName === 'work'){
+		if (data.cycle === 'work'){
 			playSound(roundStartSoundRange);
 			//soundGroup.play();			
 		} else {
+			// console.log('round info');
+			// console.log(data.round + ' of ' + $scope.data.numReps);
+			if (data.round >= $scope.data.numReps){
+				$scope.$broadcast('ians-timer:reset');
+				$scope.stateName = 'finished';
+				return;
+			}
 			playSound(roundEndSoundRange);
+
 		}
+		$scope.stateName = data.cycle;
+
 		//console.log('ians-timer:cycle-changed end' + data.cycle);
 	});
 
@@ -136,7 +145,7 @@ angular.module('shiitApp')
 
 	$scope.$watch('data.totalSeconds', function() {
 		$scope.data.cycle = updateCycle($scope.data.workSeconds, $scope.data.restSeconds);
-		console.log('data.totalSeconds got an update');
+		//console.log('data.totalSeconds got an update');
 		//$scope.data.totalSeconds = ($scope.data.workSeconds + $scope.data.restSeconds) * $scope.data.numReps;
 	});
 });

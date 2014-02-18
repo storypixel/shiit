@@ -94,6 +94,9 @@ footer{
     &.rest{
         background-color: $red-electric;
     }
+    &.finished{
+        background-color: $blue-electric;        
+    }
 }
 
 .button{
