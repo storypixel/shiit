@@ -86,7 +86,7 @@ footer{
         background-color: $gray-moody;
     }
     &.ready{
-        background-color: $orange-electric;
+        background-color: $blue-electric;
     }
     &.work{
         background-color: $green-electric;
@@ -94,7 +94,7 @@ footer{
     &.rest{
         background-color: $red-electric;
     }
-    &.finished{
+    &.finished, &.warmup{
         background-color: $blue-electric;        
     }
 }
@@ -192,7 +192,7 @@ button{
             padding: 14px 30px 0;
         }       
     }
-    @include transition (all .25s ease-in-out);
+    //@include transition (all .25s ease-in-out);
     &:hover{
         color: $baseline-color;
         background-color: $white-faded-tons;        
