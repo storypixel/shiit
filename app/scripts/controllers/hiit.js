@@ -14,24 +14,51 @@ angular.module('shiitApp')
 	// console.log('ok');
 	//console.log(HiitData);
 	//var buzz = buzz ? buzz : buzz; // this is a hack. I don't know the right way t o get angularjs to see buzzjs
+	var playSound = function(id){ return id && undefined; },
+	speech = ('speechSynthesis' in window);
 
-	var soundNewRound = new SpeechSynthesisUtterance('Go!'),
-		soundRest = new SpeechSynthesisUtterance('Rest!'),
-		soundFinished = new SpeechSynthesisUtterance('Workout complete. Congratulations!'),
-		soundReady = new SpeechSynthesisUtterance('Get Ready!'),
-		soundThree = new SpeechSynthesisUtterance('Three'),
-		soundTwo = new SpeechSynthesisUtterance('Two'),
-		soundOne = new SpeechSynthesisUtterance('One'),
-		sounds = {
-			'rest' : soundRest,
-			'work' : soundNewRound,
-			'ready': soundReady,
-			'finished' : soundFinished,
-			'count3' : soundThree,
-			'count2' : soundTwo,
-			'count1' : soundOne
+	if (speech) {
+		// Synthesis support. Make your web apps talk!
+		var soundNewRound = new window.SpeechSynthesisUtterance('Go!'),
+			soundRest = new window.SpeechSynthesisUtterance('Rest!'),
+			soundFinished = new window.SpeechSynthesisUtterance('Workout complete. Congratulations! You should go wax your biceps now.'),
+			soundReady = new window.SpeechSynthesisUtterance('Get Ready!'),
+			soundThree = new window.SpeechSynthesisUtterance('Three'),
+			soundTwo = new window.SpeechSynthesisUtterance('Two'),
+			soundOne = new window.SpeechSynthesisUtterance('One'),
+			soundError = new window.SpeechSynthesisUtterance('Ah Damn'),
+			sounds = {
+				'rest' : soundRest,
+				'work' : soundNewRound,
+				'ready': soundReady,
+				'finished' : soundFinished,
+				'count3' : soundThree,
+				'count2' : soundTwo,
+				'count1' : soundOne
+			};
+		// play speech synthesis sounds
+		playSound = function (id) {
+			window.speechSynthesis.speak(sounds[id] || soundError);
 		};
-
+	} else {
+		// function playSound(range){
+		// 	if ( angular.isDefined(soundPromise) ){
+		// 		$timeout.cancel(soundPromise);
+		// 	}
+		// 	var startTime = range[0],
+		// 			endTime = range[1],
+		// 			ms = 1000 * (endTime - startTime);
+		// 	// play a sound
+		// 	masterSound.setTime(startTime).play();
+		// 	// stop it after a time
+		// 	soundPromise = $timeout(pauseSound, ms);
+		// }		
+		// other sounds
+		// function pauseSound(){
+		// 	//masterSound.pause();
+		// 	soundPromise = undefined;
+		// }		
+	}
 
 	$scope.data = HiitData.durationData();
 
@@ -50,32 +77,9 @@ angular.module('shiitApp')
 
 	function updateCycle(workTime, restTime){
 		return [
-			{'name' : 'work', 'value' : workTime},
-			{'name' : 'rest', 'value' : restTime}
+			{'name' : 'work', 'value' : +workTime}, // convert to number with +
+			{'name' : 'rest', 'value' : +restTime}
 		];
-	}
-
-	function pauseSound(){
-		//masterSound.pause();
-		soundPromise = undefined;
-	}
-
-	// function playSound(range){
-	// 	if ( angular.isDefined(soundPromise) ){
-	// 		$timeout.cancel(soundPromise);
-	// 	}
-	// 	var startTime = range[0],
-	// 			endTime = range[1],
-	// 			ms = 1000 * (endTime - startTime);
-	// 	// play a sound
-	// 	masterSound.setTime(startTime).play();
-	// 	// stop it after a time
-	// 	soundPromise = $timeout(pauseSound, ms);
-	// }
-
-	// play speech synthesis sounds
-	function playSound(id){
-		window.speechSynthesis.speak(sounds[id] || soundError);		
 	}
 
 	var workLimit = limitRange(5, 180),
@@ -114,7 +118,7 @@ angular.module('shiitApp')
 	};
 
 	$scope.lessReps = function(){
-		$scope.data.numReps = repsLimit($scope.data.numReps - 1);	
+		$scope.data.numReps = repsLimit($scope.data.numReps - 1);
 	};
 
 	$scope.calcTotalSeconds = function(){
@@ -172,7 +176,7 @@ angular.module('shiitApp')
 	});
 
 	$scope.$watch('data.totalSeconds', function() {
-		$scope.data.cycle = updateCycle($scope.data.workSeconds, $scope.data.restSeconds);
+		$scope.data.cycle = updateCycle(+$scope.data.workSeconds, +$scope.data.restSeconds);
 		//console.log('data.totalSeconds got an update');
 		//$scope.data.totalSeconds = ($scope.data.workSeconds + $scope.data.restSeconds) * $scope.data.numReps;
 	});
