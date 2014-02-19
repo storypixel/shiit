@@ -212,7 +212,7 @@ angular.module('iansTimer', [])
 					// start the UI update process; save the timeoutId for canceling
 					tick();
 					stop = $interval(tick, updateEvery);
-
+					
 					$scope.$emit('ians-timer:started');
 
 				});
