@@ -10,7 +10,6 @@
     "angular-sanitize": "1.2.6",
     "angular-route": "1.2.6",
     "angular-ui-router": "0.2.8-bowratic-tedium",
-    "buzz": "~1.1.0",
     "fastclick": "~0.6.11"
   },
   "devDependencies": {
