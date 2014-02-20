@@ -7,7 +7,8 @@ angular.module('shiitApp', [
   'ngRoute',
   'ui.router',
   'iansTimer',
-  'shiitFilters'
+  'shiitFilters',
+  'LocalStorageModule'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
