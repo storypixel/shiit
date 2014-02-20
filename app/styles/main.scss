@@ -6,13 +6,13 @@
 
 @font-face {
     font-family: HelveticaSauce;
-    src: url("/fonts/HelveticaNeueLTPro-UltLtCn.otf") format("opentype");
+    src: url("/fonts/UniversLTStd-ThinUltraCn.otf") format("opentype");
 }
 
 @font-face {
     font-family: HelveticaSauce;
     font-weight: bold;
-    src: url("/fonts/HelveticaNeueLTPro-MdCn.otf") format("opentype");
+    src: url("/fonts/UniversLTStd-UltraCn.otf") format("opentype");
 }
 
 *, *:before, *:after {
@@ -36,6 +36,7 @@ body{
 
 h1, h2, h3, h4, h5, h6{
     font-size: inherit;
+    //font-weight: normal;
     margin: 0;
 }
 h2{
@@ -43,7 +44,7 @@ h2{
     background-color: transparent; //cyan;
     color: $clr-text-secondary;
     margin: 0;
-    font-weight: normal;
+    //font-weight: normal;
     //line-height: $fs-large;
 }
 
@@ -63,11 +64,17 @@ footer{
 .timer{
     font-size: $fs-larger;
     letter-spacing: 1px;
+    font-family: HelveticaSauce, sans-serif;  
+    text-transform: uppercase;
+    font-weight: bold;        
     @include col(12);
     @media(min-width: $tablet-width) {
         //font-size: 64px;
         //text-indent: 777px;
-        letter-spacing: 3px;
+        font-weight: normal;
+        text-transform: none;     
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
     }
     *{ -webkit-user-select: none; user-select: none; }
 }
@@ -112,6 +119,7 @@ footer{
     border: 1px solid transparent;
     border-radius: 4px;
     outline: none;
+    text-transform: inherit;
     -webkit-user-select: none;
 }
 
@@ -122,10 +130,7 @@ footer{
 }
 
 .big-serious{
-    font-family: HelveticaSauce, "Open Sans Condensed", sans-serif;
-    text-transform: uppercase;
 }
-
 
 .dimension, .total-time{
     padding-top: 15px;
@@ -142,6 +147,7 @@ time{
     .total-time &, 
     .big-time &{
         font-weight: bold;
+        //font-size: $fs-huger;
     }
     //font-weight: bold;
 }   
@@ -156,12 +162,13 @@ button{
         color: $white-faded-barely;
         border-color: $clr-button-border;
         padding: 12px 12px 0px;
+        border-radius: 50%;
+
     }   
     &.less, &.more{
         background-color: transparent;              
         background-position: center center;
         background-repeat: no-repeat;
-        border-radius: 50%;
         background-size: 50%;
         padding: 0;
         text-indent: -9999em;
@@ -185,11 +192,13 @@ button{
         margin-left: $fs-small;
     }
     &.verbal{
-        font-weight: bold;
-        height: 48px;
+        //font-weight: bold;
+        height: $fs-huger;
+        padding: 8px 0 0; // because custom fonts
+        width: $fs-huger;
         @media(min-width: $tablet-width) {
             height: 96px;
-            padding: 14px 30px 0;
+            padding: 0;
         }       
     }
     //@include transition (all .25s ease-in-out);
@@ -267,6 +276,7 @@ button{
     }    
 }
 
+// on the calibrate screen
 .total-time{
     h2{
         display: none;
@@ -276,8 +286,11 @@ button{
     }
     time{
         text-align: left;
+        font-size: $fs-huger*1.4;
+        //letter-spacing: -6px;
+        font-weight: normal;
         @media(min-width: $tablet-width) {
-            font-size: $fs-largest * 2;
+            font-size: $fs-huger;
             height: 166px;
             position: relative;
             text-align: right;
@@ -331,15 +344,15 @@ button{
 }
 
 .big-time{
-    //padding-bottom: 0;
+    // on the work screen
     time{
-        font-size: $fs-largest;
+        font-size: $fs-huger;
         height: 88px;
         line-height: 1;
         padding-top: 8px;
         text-align: center;
         @media(min-width: $tablet-width) {
-            font-size: $fs-largest * 2;
+            font-size: 132px;
             height: 160px;          
         }       
         @include col(12);

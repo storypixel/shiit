@@ -16,16 +16,22 @@ angular.module('shiitApp')
 	//var buzz = buzz ? buzz : buzz; // this is a hack. I don't know the right way t o get angularjs to see buzzjs
 	var playSound = function(id){ return id && undefined; },
 	pauseSound = function(){},
+	aPhrase = function(){},
 	sounds,
 	speech = ('speechSynthesis' in window);
 
 	// second clause added to allow work in FireFox
 	if (speech && window.SpeechSynthesisUtterance) {
+		aPhrase = function(){
+			return 'That was awesome work.';
+		};
+				
 		// Synthesis support. Make your web apps talk!
 		var soundNewRound = new window.SpeechSynthesisUtterance('Go!'),
 			soundRest = new window.SpeechSynthesisUtterance('Rest!'),
-			soundFinished = new window.SpeechSynthesisUtterance('Workout complete. Congratulations! You should go wax your biceps now.'),
+			soundFinished = new window.SpeechSynthesisUtterance('Workout complete. Congratulations! ' + aPhrase()),
 			soundReady = new window.SpeechSynthesisUtterance('Get Ready!'),
+			soundGoTime = soundReady,
 			soundThree = new window.SpeechSynthesisUtterance('Three'),
 			soundTwo = new window.SpeechSynthesisUtterance('Two'),
 			soundOne = new window.SpeechSynthesisUtterance('One'),
@@ -36,6 +42,7 @@ angular.module('shiitApp')
 			'work' : soundNewRound,
 			'ready': soundReady,
 			'finished' : soundFinished,
+			'gotime' : soundGoTime,
 			'count3' : soundThree,
 			'count2' : soundTwo,
 			'count1' : soundOne
@@ -59,7 +66,8 @@ angular.module('shiitApp')
 			'finished' : doneSoundRange,
 			'count3' : hintSoundRange,
 			'count2' : hintSoundRange,
-			'count1' : hintSoundRange
+			'count1' : hintSoundRange,
+			'gotime' : hintSoundRange
 		};
 
 		playSound = function (id){
@@ -131,6 +139,7 @@ angular.module('shiitApp')
 
 
 	$scope.goToWork = function(){
+		playSound('gotime'); // "3", "2", or "1"		
 		$state.transitionTo('hiit.work');
 	};
 

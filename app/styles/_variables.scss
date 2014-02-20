@@ -2,7 +2,10 @@ $fs-normal: 14px;
 $fs-small: 12px;
 $fs-large: 24px;
 $fs-larger: 30px;
-$fs-largest: 48*2px; //golden-ratio($fs-normal,  4);
+$fs-largest: 48px;
+$fs-huge: 48px;
+$fs-huger: 48*2px; //golden-ratio($fs-normal,  4);
+$fs-hugest: $fs-huger * 2; //golden-ratio($fs-normal,  4);
 
 // Grays
 // -------------------------
