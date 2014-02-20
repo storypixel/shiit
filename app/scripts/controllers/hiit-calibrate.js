@@ -8,9 +8,9 @@ angular.module('shiitApp')
 
 	var localStateName = 'calibrating';
 
-	$scope.$on('timer-stopped', function (event, data){
-		console.log('Timer Stopped - data = ', data);
-	});
+	// $scope.$on('timer-stopped', function (event, data){
+	// 	console.log('Timer Stopped - data = ', data);
+	// });
 
 	//$scope.stateClass = $scope.$parent.defaultStateClass;
 	$scope.$on('$viewContentLoaded', function(/*event, viewConfig*/){

@@ -247,7 +247,7 @@ button{
                 text-transform: none;
                 font-weight: normal;
                 position: absolute;
-                right: 0;
+                right: -2px;                
             } 
         }
     }
@@ -286,7 +286,7 @@ button{
     }
     time{
         text-align: left;
-        font-size: $fs-huger*1.4;
+        font-size: 132px;
         //letter-spacing: -6px;
         font-weight: normal;
         @media(min-width: $tablet-width) {

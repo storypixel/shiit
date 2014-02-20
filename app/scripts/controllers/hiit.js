@@ -31,7 +31,7 @@ angular.module('shiitApp')
 			soundRest = new window.SpeechSynthesisUtterance('Rest!'),
 			soundFinished = new window.SpeechSynthesisUtterance('Workout complete. Congratulations! ' + aPhrase()),
 			soundReady = new window.SpeechSynthesisUtterance('Get Ready!'),
-			soundGoTime = soundReady,
+			soundGoTime = new window.SpeechSynthesisUtterance('Get Ready!'),
 			soundThree = new window.SpeechSynthesisUtterance('Three'),
 			soundTwo = new window.SpeechSynthesisUtterance('Two'),
 			soundOne = new window.SpeechSynthesisUtterance('One'),
@@ -101,7 +101,7 @@ angular.module('shiitApp')
 	console.log(typeof localStorageService.get('HiitData'));
 
 	$scope.data = localStorageService.get('HiitData');
-
+	console.log($scope.data);
 	// // To add to local storage
 	// localStorageService.set('localStorageKey','Add this!');
 	// // Read that value back
