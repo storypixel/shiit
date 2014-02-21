@@ -61,6 +61,38 @@ footer{
     @include col-wrap;
 }
 
+/* GRID */
+.working{
+    .dimension{
+        &.work{
+            >nav, >h2, >aside{
+                height: 42px;
+                @include col(4);
+                @media(min-width: $tablet-width) { 
+                }           
+            }            
+        }
+    }
+}
+
+/* LAYOUT */
+.working{
+    .dimension{
+        &.work{
+            >nav{
+                text-align: right;
+                // height: 42px;
+                // @include col(4);
+                // @media(min-width: $tablet-width) { 
+                // }           
+            }
+            >aside{
+                text-align: center;
+            }          
+        }
+    }
+}
+
 .timer{
     font-size: $fs-larger;
     letter-spacing: 1px;
@@ -128,6 +160,22 @@ footer{
     //background-color: #fff;
     border-color: $clr-button-border;       
 }
+
+.button-small{
+    display: inline-block;
+    height: 42px;
+    line-height: 1.6;
+    padding-bottom: 0;
+    padding-top: 0;
+    @media(min-width: $tablet-width) {
+        line-height: 0;
+        &.done{
+            padding-bottom: 4px;            
+        }
+    }
+}
+
+
 
 .big-serious{
 }
@@ -273,8 +321,10 @@ button{
             //margin-bottom: -8px;
             //text-indent: 777px;
         }   
-    }    
+    }   
 }
+
+
 
 // on the calibrate screen
 .total-time{

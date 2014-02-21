@@ -18,6 +18,7 @@ angular.module('shiitApp')
 		var soundNewRound = new window.SpeechSynthesisUtterance('Go!'),
 			soundRest = new window.SpeechSynthesisUtterance('Rest!'),
 			soundFinished = new window.SpeechSynthesisUtterance('Workout complete. Congratulations! ' + aPhrase()),
+			soundQuitting = new window.SpeechSynthesisUtterance('You are kidding me.'),
 			soundReady = new window.SpeechSynthesisUtterance('Get Ready!'),
 			soundGoTime = new window.SpeechSynthesisUtterance('Get Ready!'),
 			soundThree = new window.SpeechSynthesisUtterance('Three'),
@@ -27,6 +28,7 @@ angular.module('shiitApp')
 
 		sounds = {
 			'rest' : soundRest,
+			'quitting' : soundQuitting,
 			'work' : soundNewRound,
 			'ready': soundReady,
 			'finished' : soundFinished,
@@ -49,6 +51,7 @@ angular.module('shiitApp')
 
 		sounds = {
 			'rest' : roundEndSoundRange,
+			'quitting' : roundEndSoundRange,
 			'work' : roundStartSoundRange,
 			'ready': hintSoundRange,
 			'finished' : doneSoundRange,
@@ -114,6 +117,11 @@ angular.module('shiitApp')
 	$scope.goToWork = function(){
 		playSound('gotime'); // "3", "2", or "1"		
 		$state.transitionTo('hiit.work');
+	};
+
+	$scope.quit = function(){
+		playSound('quitting'); // "3", "2", or "1"		
+		$state.transitionTo('hiit.calibrate');
 	};
 
 	// WORK

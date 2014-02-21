@@ -1,10 +1,13 @@
-<section class="timer at-work row">
+<section class="timer at-work working row">
 	<header class="row">
 		<div class="work dimension row">
 			<h2>{{ $parent.stateName }}</h2>
 			<aside>
 				<h3><span class="current-rep">{{ $parent.currentRound }}</span>/<span class="of-total">{{ $parent.data.numReps }}</span></h3>
 			</aside>
+			<nav>
+				<button ng-click="quit()" class="button-small done">quit</button>
+			</nav>
 		</div>
 		<div class="big-time dimension row">
 			<time class="timer">
