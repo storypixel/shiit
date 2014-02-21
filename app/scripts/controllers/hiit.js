@@ -11,7 +11,15 @@ angular.module('shiitApp')
 	// second clause added to allow work in FireFox
 	if (speech && window.SpeechSynthesisUtterance) {
 		aPhrase = function(){
-			return 'That was awesome work.';
+			var possibilities = [
+				'That was awesome work.',
+				'You are a beast.',
+				'You totally owned it.',
+				'Beast mode.',
+				'Unstoppable.',
+				'Strawberry? What about raw berry.'
+			];
+			return possibilities[Math.floor(Math.random() * possibilities.length)];
 		};
 				
 		// Synthesis support. Make your web apps talk!
