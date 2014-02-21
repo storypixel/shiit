@@ -78,7 +78,8 @@ angular.module('shiitApp')
 		};
 	}
 
-	if (localStorageService.get('HiitData') === null){
+	//localStorageService.clearAll();
+	if (!localStorageService.get('HiitData')){
 		localStorageService.set('HiitData', JSON.stringify(HiitData.durationData()));
 	}
 
@@ -179,7 +180,9 @@ angular.module('shiitApp')
 	});
 
 	$scope.$watch('data.totalSeconds', function() {
-		angular.extend($scope.data.cycle, updateCycle(+$scope.data.workSeconds, +$scope.data.restSeconds));
-		localStorageService.set('HiitData', JSON.stringify($scope.data));
+		$scope.data.cycle = updateCycle(+$scope.data.workSeconds, +$scope.data.restSeconds);
+		if (localStorageService.get('HiitData')){
+			localStorageService.set('HiitData', JSON.stringify($scope.data));
+		}
 	});
 });
