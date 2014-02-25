@@ -31,7 +31,6 @@ body{
     font-size: $fs-normal;
     line-height: 1;
     min-height: 100%;
-    @extend .big-serious;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -62,6 +61,10 @@ footer{
 }
 
 /* GRID */
+.timer{
+    @include col(12);
+    
+}
 .working{
     .dimension{
         &.work{
@@ -99,7 +102,6 @@ footer{
     font-family: HelveticaSauce, sans-serif;  
     text-transform: uppercase;
     font-weight: bold;        
-    @include col(12);
     @media(min-width: $tablet-width) {
         //font-size: 64px;
         //text-indent: 777px;
@@ -175,11 +177,6 @@ footer{
     }
 }
 
-
-
-.big-serious{
-}
-
 .dimension, .total-time{
     padding-top: 15px;
     padding-bottom: 15px;       
@@ -203,7 +200,6 @@ time{
 button{
     @extend .button;
     @extend .button-default;
-    @extend .big-serious;   
     &.action{
         //background-color: white;
         background-color: $clr-button-background;
@@ -271,7 +267,6 @@ button{
     }
     >h2{
         @include col(3);
-        //@extend .big-serious;
         .at-work &{
             @include col(7);           
         }
@@ -341,6 +336,7 @@ button{
         font-weight: normal;
         @media(min-width: $tablet-width) {
             font-size: $fs-huger;
+            font-weight: bold;
             height: 166px;
             position: relative;
             text-align: right;

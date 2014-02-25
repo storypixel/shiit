@@ -84,7 +84,7 @@ angular.module('shiitApp')
 		};
 		//other sounds
 		pauseSound = function(){
-			//masterSound.pause();
+			masterSound.pause();
 			soundPromise = undefined;
 		};
 	}

@@ -13,7 +13,7 @@ angular.module('shiitApp', [
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
     // For any unmatched url, send to /route1
-    //$urlRouterProvider.when('/hiit', '/hiit/calibrate');
+    $urlRouterProvider.when('/endless/nothing', 'partials/nothing.html');
     $urlRouterProvider.otherwise('/hiit');
       
     $stateProvider

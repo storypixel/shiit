@@ -322,7 +322,19 @@ module.exports = function (grunt) {
             '{,*/}*.mp3',
             '*.*'
           ]
-        }, 
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>/videos',
+          dest: '<%= yeoman.dist %>/public/videos',
+          src: [
+            '**/*.{mp4,wav,ogg}',
+            '*.{mp4,wav,ogg}',
+            '{,*/}*.mp4',
+            '*.*'
+          ]
+        },         
         {
           expand: true,
           cwd: '.tmp/images',
