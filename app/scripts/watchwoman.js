@@ -49,6 +49,7 @@
 			// publics
 			this.caffeinate = function(){
 				// this is lazy. Detect then call only the right fucntion TODO
+				this.decaffeinate();
 				this.preventSleepForIOS();
 				this.preventSleepForAndroid();
 			};
@@ -76,7 +77,9 @@
 			};
 
 			this.allowSleepForIOS = function() {
-				clearInterval(iOSSleepIntervalId);
+				if (iOSSleepIntervalId){
+					clearInterval(iOSSleepIntervalId);
+				}
 				return this;
 			};
 
