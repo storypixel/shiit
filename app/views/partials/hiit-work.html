@@ -3,7 +3,7 @@
 		<div class="work dimension row">
 			<h2>{{ $parent.stateName }}</h2>
 			<aside>
-				<h3><span class="current-rep">{{ $parent.currentRound }}</span>/<span class="of-total">{{ $parent.data.numReps }}</span></h3>
+				<h3><span class="current-rep">{{ $parent.currentRound || '0' }}</span>/<span class="of-total">{{ $parent.data.numReps }}</span></h3>
 			</aside>
 			<nav>
 				<button ng-click="quit()" class="button-small done">quit</button>

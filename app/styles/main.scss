@@ -167,8 +167,7 @@ footer{
     display: inline-block;
     height: 42px;
     line-height: 1.6;
-    padding-bottom: 0;
-    padding-top: 0;
+    padding: 0 .25em;
     @media(min-width: $tablet-width) {
         line-height: 0;
         &.done{

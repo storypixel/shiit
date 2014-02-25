@@ -43,6 +43,7 @@ angular.module('iansTimer', [])
 				cumulativeValue,
 				//timeAsIndex,
 				sumOfTime,
+				warmupLeft,
 				cycleLength,
 				cycleName,
 				cycles = angular.copy($scope.cyclesData);
@@ -65,7 +66,7 @@ angular.module('iansTimer', [])
 					//lastRestSubtracted = 0; // maybe this isn't for the ians=timer?
 
 					sumOfTime = 0;
-					$scope.warmup = $scope.warmup || 10;
+					warmupLeft = $scope.warmup = $scope.warmup || 10;
 					slen = cycles.length;
 					// Assign round length in seconds
 					angular.forEach( cycles, function(obj, i){
@@ -134,7 +135,7 @@ angular.module('iansTimer', [])
 							$scope.$emit('ians-timer:cycle-changed', {'cycle' : 'ready', 'round' : 0});
 						}
 						// let it hit zero
-						writeTime(1 + (($scope.time - 1) % $scope.warmup)); // hits zero only when time has ran out
+						writeTime(warmupLeft--); // hits zero only when time has ran out
 						return;
 					}
 					////console.log('here we go'+cribSheet);
