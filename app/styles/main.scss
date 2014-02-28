@@ -22,80 +22,56 @@
 
 
 html{ height: 100%; }
-
 body{
     margin: 0;
-//    font-size: 10em;
     color: $baseline-color;
-    //line-height: $fs-normal * 3;
     font-size: $fs-normal;
     line-height: 1;
     min-height: 100%;
 }
 
-h1, h2, h3, h4, h5, h6{
-    font-size: inherit;
-    //font-weight: normal;
-    margin: 0;
-}
-h2{
-    //font-size: $fs-larger;
-    background-color: transparent; //cyan;
-    color: $clr-text-secondary;
-    margin: 0;
-    //font-weight: normal;
-    //line-height: $fs-large;
-}
-
-h3{
-    color: $white-faded-some;
-    font-weight: normal;
-    span{
-        color: white;
-        font-weight: bold;
-    }
-}
-
-footer{
-    @include col-wrap;
-}
 
 /* GRID */
-.timer{
-    @include col(12);
-
+footer,
+.dimension{
+  @include col-wrap;
 }
-.working{
-    .dimension{
-        &.work{
-            >nav, >h2, >aside{
-                height: 42px;
-                @include col(4);
-                @media(min-width: $tablet-width) {
-                }
-            }
-        }
+
+.timer,
+.timer-action-col,
+.big-time time{
+  @include col(12);
+}
+.current-state-col{
+  @include col(7);
+}
+.current-state-col,
+.current-rep-col,
+.action-col,
+.dimension-time-value{
+    @include col(4);
+}
+.placeholder-col,
+.start-work-col,
+.time-total-col{
+    @include col(6);
+}
+.adjust-work{@include col(5);}
+.dimension-label{ @include col(3); }
+
+@media(min-width: $tablet-width) {
+  .time-total-col, .placeholder-col{
+      @include col(4);
     }
+    .start-work-col, .time-total-col{
+    @include col(5);
+  }
+  .placeholder-col{
+    @include col(2);
+  }
 }
 
-/* LAYOUT */
-.working{
-    .dimension{
-        &.work{
-            >nav{
-                text-align: right;
-                // height: 42px;
-                // @include col(4);
-                // @media(min-width: $tablet-width) {
-                // }
-            }
-            >aside{
-                text-align: center;
-            }
-        }
-    }
-}
-
+/* STRUCTURE */
 .timer{
     font-size: $fs-larger;
     letter-spacing: 1px;
@@ -105,12 +81,44 @@ footer{
     @media(min-width: $tablet-width) {
         //font-size: 64px;
         //text-indent: 777px;
-        font-weight: normal;
         text-transform: none;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     }
     *{ -webkit-user-select: none; user-select: none; }
+
+    h1, h2, h3, h4, h5, h6{
+        font-size: inherit;
+        margin: 0;
+    }
+    h2{
+        background-color: transparent; //cyan;
+        color: $clr-text-secondary;
+        margin: 0;
+    }
+
+    h3{
+        color: $white-faded-some;
+        font-weight: 100;
+        span{
+            color: $baseline-color;
+            font-weight: bold;
+        }
+    }
+}
+
+.dimension, .total-time{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.dimension{
+    border-bottom: 1px $clr-border solid;
+    line-height: 1.7;
+    max-height: $vertical-unit * 3;
+    @media(min-width: $tablet-width) {
+        line-height: 1.3;
+    }
 }
 
 .sexy-back{
@@ -119,9 +127,9 @@ footer{
     left:0;
     position: absolute;
     right:0;
+    text-indent: -9999em;
     top:0;
     z-index: -1;
-    text-indent: -9999em;
     @include transition (background-color .25s ease-in-out);
     &.calibrating{
         background-color: $gray-moody;
@@ -140,28 +148,7 @@ footer{
     }
 }
 
-.button{
-    background-color: transparent;
-    display: inline-block;
-    //padding: 6px 12px;
-    margin-bottom: 0;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    outline: none;
-    text-transform: inherit;
-    -webkit-user-select: none;
-}
-
-.button-default{
-    color: $baseline-color;
-    //background-color: #fff;
-    border-color: $clr-button-border;
-}
+/* BUTTONS */
 
 .button-small{
     display: inline-block;
@@ -176,35 +163,31 @@ footer{
     }
 }
 
-.dimension, .total-time{
-    padding-top: 15px;
-    padding-bottom: 15px;
-    @media(min-width: $tablet-width) {
-        //padding-bottom: 7px;
-        //text-indent: 777px;
-
-    }
-}
-
-time{
-    text-align: right;
-    .total-time &,
-    .big-time &{
-        font-weight: bold;
-        //font-size: $fs-huger;
-    }
-    //font-weight: bold;
-}
-
 button{
-    @extend .button;
-    @extend .button-default;
+  background-color: transparent;
+  color: $baseline-color;
+  display: inline-block;
+  letter-spacing: 0;
+  //padding: 6px 12px;
+  margin-bottom: 0;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  text-transform: inherit;
+  -webkit-user-select: none;
+  //background-color: #fff;
+  border-color: $clr-button-border;
     &.action{
         //background-color: white;
         background-color: $clr-button-background;
         color: $white-faded-barely;
         border-color: $clr-button-border;
-        padding: 12px 12px 0px;
+        padding: 12px 10px 0px;
         border-radius: 50%;
 
     }
@@ -217,11 +200,6 @@ button{
         text-indent: -9999em;
         width: 42px;
         height: 42px;
-        // @media(min-width: $tablet-width) {
-        //     width: 64px;
-        //     height: 64px;
-        // }
-
     }
     &.less{
         background-image: url(../images/minusFFFFFF.svg);
@@ -232,7 +210,7 @@ button{
     }
     &:not(.ng-hide) + &{
         // when one button follows another
-        margin-left: $fs-small;
+        margin-left: 10px;
     }
     &.verbal{
         //font-weight: bold;
@@ -240,10 +218,15 @@ button{
         padding: 8px 0 0; // because custom fonts
         width: $fs-huger;
         @media(min-width: $tablet-width) {
-            height: 96px;
             padding: 0;
         }
     }
+    &.pause, &.go{
+      @media(min-width: $tablet-width) {
+        height: 132px;
+        width: 132px;
+      }
+  }
     //@include transition (all .25s ease-in-out);
     &:hover{
         color: $baseline-color;
@@ -252,145 +235,72 @@ button{
     }
 }
 
-/* LAYOUT */
-.dimension{
-    border-bottom: 1px $clr-border solid;
-    line-height: 1.7;
-    max-height: $vertical-unit * 3;
-    @media(min-width: $tablet-width) {
-        line-height: 1.3;
-    }
-    @include col-wrap;
-
-    >h2{
-        @include col(3);
-        .at-work &{
-            @include col(7);
-        }
-        span{
-            display: none;
-            @media(min-width: $tablet-width) {
-                display: inline;
-            }
-        }
-    }
-    >time{
-        @include col(4);
-    }
-
-    &.repeat time{
-        &:after{
-            @media(min-width: $tablet-width) {
-                color: $white-faded-some;
-                content: "x";
-                font-size: $fs-larger;
-                text-transform: none;
-                font-weight: normal;
-                position: absolute;
-                right: -2px;
-            }
-        }
-    }
-
-    >aside{
-        text-align: right;
-        @include col(5);
-    }
-    >nav, >time, >h2{
-        height: 42px;
-        @media(min-width: $tablet-width) {
-            @include col(4);
-        }
-    }
-    >h2{ @include col(3); }
-    >time{ @include col(4); }
-    >nav{
-        text-align: right;
-        //font-size: $fs-large;
-        //margin-top: -10px;
-        @include col(5);
-        @media(min-width: $tablet-width) {
-            //margin-bottom: -8px;
-            //text-indent: 777px;
-        }
-    }
-}
 
 
-
-// on the calibrate screen
-.total-time{
-    h2{
+.dimension-label{
+    span{
         display: none;
         @media(min-width: $tablet-width) {
-            display: block;
-        }
-    }
-    time{
-        text-align: left;
-        font-size: 132px;
-        //letter-spacing: -6px;
-        font-weight: normal;
-        @media(min-width: $tablet-width) {
-            font-size: $fs-huger;
-            font-weight: bold;
-            height: 166px;
-            position: relative;
-            text-align: right;
-            @include col(5);
-            span{
-                position: absolute;
-                right: 0;
-            }
-            //@include col(3);
-        }
-    }
-    nav{
-        margin-top: 0;
-        text-align: right;
-        @include col(5);
-        .at-work &{
-            text-align: center;
-            @include col(12);
-            // @media(min-width: $tablet-width) {
-            //  margin-top: -12px;
-            // }
-        }
-        .at-rest &{
-            //margin-top: -12px;
-            @media(min-width: $tablet-width) {
-                margin-top: 0;
-            }
-        }
-    }
-    >nav, >time, >h2{
-        @include col(6);
-        @media(min-width: $tablet-width) {
-            @include col(4);
-        }
-    }
-    >nav{
-        @media(min-width: $tablet-width) {
-            @include col(5);
-        }
-    }
-    >time{
-        @media(min-width: $tablet-width) {
-            @include col(5);
-        }
-    }
-    >h2{
-        @media(min-width: $tablet-width) {
-            @include col(2);
+            display: inline;
         }
     }
 }
+
+
+.multipled:after{
+  @media(min-width: $tablet-width) {
+      color: $white-faded-some;
+      content: "x";
+      font-size: $fs-larger;
+      text-transform: none;
+      font-weight: 100;
+      position: absolute;
+      right: -2px;
+  }
+}
+
+.current-rep-col{ text-align: center; }
+.action-col,
+.timer-action-col,
+.start-work-col,
+.dimension-time-value,
+.adjust-work{
+    text-align: right;
+}
+
+.adjust-work, .action-col{ line-height: 0; }
+
+// on the calibrate screen
+.placeholder-col{
+    display: none;
+    @media(min-width: $tablet-width) {
+        display: block;
+    }
+}
+.time-total-col{
+    text-align: left;
+    font-size: 132px;
+    font-weight: normal;
+    @media(min-width: $tablet-width) {
+        font-size: $fs-huger;
+        font-weight: bold;
+        height: 166px;
+        position: relative;
+        text-align: right;
+        //@include col(3);
+    }
+}
+
+.action-col,
+.timer-action-col,
+.start-work-col{
+  margin-top: 0;
+}
+
+.timer-action-col{ text-align: center; }
 
 .big-time{
     max-height: $vertical-unit * 7;
-    @media(min-width: $tablet-width) {
-        max-height: $vertical-unit * 7;
-    }
     // on the work screen
     time{
         font-size: $vertical-unit * 7;
@@ -402,17 +312,5 @@ button{
         @media(min-width: $tablet-width) {
             line-height: .65;
         }
-        @include col(12);
     }
 }
-
-.touch-zone{
-    nav{
-        text-align: center;
-        margin-top: 0;
-        @include col(12);
-    }
-}
-
-
-nav{ line-height: 0; }
