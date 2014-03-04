@@ -12,7 +12,8 @@ angular.module('shiitApp')
           preSeconds: 10,
           workSeconds: 20,
           restSeconds: 10,
-          numReps: 8
+          numReps: 8,
+          currentSecond: 0
         };
       }
     };

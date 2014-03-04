@@ -21,7 +21,7 @@ angular.module('shiitApp')
 			];
 			return possibilities[Math.floor(Math.random() * possibilities.length)];
 		};
-				
+
 		// Synthesis support. Make your web apps talk!
 		var soundNewRound = new window.SpeechSynthesisUtterance('Go!'),
 			soundRest = new window.SpeechSynthesisUtterance('Rest!'),
@@ -118,17 +118,23 @@ angular.module('shiitApp')
 		return o;
 	}
 
+	function save(){
+		if (localStorageService.get('HiitData')){
+			localStorageService.set('HiitData', JSON.stringify($scope.data));
+		}
+	}
+
 	var workLimit = limitRange(5, 180),
 		restLimit = limitRange(0, 60),
 		repsLimit = limitRange(1, 90);
 
 	$scope.goToWork = function(){
-		playSound('gotime'); // "3", "2", or "1"		
+		playSound('gotime'); // "3", "2", or "1"
 		$state.transitionTo('hiit.work');
 	};
 
 	$scope.quit = function(){
-		playSound('quitting'); // "3", "2", or "1"		
+		playSound('quitting'); // "3", "2", or "1"
 		$state.transitionTo('hiit.calibrate');
 	};
 
@@ -191,14 +197,14 @@ angular.module('shiitApp')
 	// whenever it goes from rest to work or vice versa...
 	$scope.$on('ians-timer:tick', function (event, data) {
 		if ( (data.time < 4) && ($scope.stateName === 'rest') ){
-			playSound('count'+data.time); // "3", "2", or "1"
+			playSound('count'+data.displayTime); // "3", "2", or "1"
 		}
+		$scope.data.currentSecond = data.displayTime;
+		save();
 	});
 
 	$scope.$watch('data.totalSeconds', function() {
 		$scope.data.cycle = updateCycle(+$scope.data.workSeconds, +$scope.data.restSeconds);
-		if (localStorageService.get('HiitData')){
-			localStorageService.set('HiitData', JSON.stringify($scope.data));
-		}
+		save();
 	});
 });

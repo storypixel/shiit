@@ -1,18 +1,18 @@
 /**
- * angular-simple-timer 
+ * angular-simple-timer
  */
 'use strict';
 
 /*
 params
 
-	delay:Number, 
+	delay:Number,
 	repeatCount:int = 0,
 	currentCount //readonly
 methods
 	reset	()	method
-	start	()	method	 
-	stop	()	
+	start	()	method
+	stop	()
 	*/
 
 angular.module('iansTimer', [])
@@ -39,7 +39,7 @@ angular.module('iansTimer', [])
 				cycleObjectIndex,
 				//lastCycleObjectIndex,
 				roundSentinel, // a way to track when we get to a new round
-				//lastRoundSentinel,  
+				//lastRoundSentinel,
 				cumulativeValue,
 				//timeAsIndex,
 				sumOfTime,
@@ -94,7 +94,7 @@ angular.module('iansTimer', [])
 					cycleObjectIndex = roundSentinel = currentRound = oldTime = cycleLength = 0; // how many times we go through each set of cycles
 
 					// Make a cribSheet that a guide to know what cycle each second falls into
-					cribSheet = []; // 
+					cribSheet = []; //
 					while (cyclesLeftToAddToCribSheet--) {
 						currentIndex = cyclesLeftToAddToCribSheet % slen;
 						// over time produces a cribSheet looking like "1111000011110000" -> 4 seconds rest, 4 seconds work; 2 cycles
@@ -115,7 +115,7 @@ angular.module('iansTimer', [])
 
 				// Update the time to the screen in a way that reflects current round and cycle
 				function updateTime() {
-		
+
 					/*jslint bitwise: true */ // ^ jslint was complaining about bitwise. turn that off.
 					//timeAsIndex = $scope.time; // ($scope.time - 0.001) | 0; // would be a problem if time goes to -1 or less
 					/*jslint bitwise: false */
@@ -141,8 +141,8 @@ angular.module('iansTimer', [])
 					////console.log('here we go'+cribSheet);
 
 
-					cycleName   = cycles[ cycleObjectIndex ].name; // determine this cycle's name					
-					cycleLength  = +cycles[ cycleObjectIndex ].value; // determine this cycle's name					
+					cycleName   = cycles[ cycleObjectIndex ].name; // determine this cycle's name
+					cycleLength  = +cycles[ cycleObjectIndex ].value; // determine this cycle's name
 					cumulativeValue = +cycles[ cycleObjectIndex ].cumulativeValue;
 					secondsLeftInCycle = thisi - (roundLength - cumulativeValue);
 					////console.log(cycleName + thisi);
@@ -180,7 +180,7 @@ angular.module('iansTimer', [])
 				function writeTime(t){
 					newTime = $filter('digitalTime')(t);
 					$element.text(newTime); // never hits zero until all is complete
-					$scope.$emit('ians-timer:tick', {'time' : t});
+					$scope.$emit('ians-timer:tick', {'displayTime' : t, 'time' : $scope.time});
 				}
 
 				// Destroy
