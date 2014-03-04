@@ -63,12 +63,16 @@ footer,
   .time-total-col, .placeholder-col{
       @include col(4);
     }
-    .start-work-col, .time-total-col{
-    @include col(5);
+  .placeholder-col, .start-work-col, .time-total-col{
+    @include col(4);
   }
-  .placeholder-col{
-    @include col(2);
+
+  .adjust-work,
+  .dimension-label,
+  .dimension-time-value{
+      @include col(4);
   }
+
 }
 
 /* STRUCTURE */
@@ -247,7 +251,8 @@ button{
 
 .evergreen{
   position: fixed;
-  background: rgba(255,255,255,.1);
+  //background: rgba(255,255,255,.1);
+  border-top: 1px $clr-border solid;
   bottom: 0;
   min-height: 48px;
   left: 0;
@@ -269,17 +274,25 @@ button{
       font-size: $fs-larger;
       text-transform: none;
       font-weight: 100;
-      position: absolute;
+      //position: absolute;
       right: -2px;
   }
 }
 
-.current-rep-col{ text-align: center; }
+.current-rep-col{
+  text-align: center;
+}
+
+  .dimension-time-value{
+    text-align: right;
+    @media(min-width: $tablet-width) {
+      text-align: center;
+    }
+}
 
 .action-col,
 .timer-action-col,
 .start-work-col,
-.dimension-time-value,
 .adjust-work{
     text-align: right;
 }
@@ -300,7 +313,7 @@ button{
         font-weight: bold;
         height: 166px;
         position: relative;
-        text-align: right;
+        text-align: center;
         //@include col(3);
     }
 }
