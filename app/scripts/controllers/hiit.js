@@ -47,6 +47,7 @@ angular.module('shiitApp')
 		};
 		// play speech synthesis sounds
 		playSound = function (id) {
+			console.log('looking at '+id);
 			window.speechSynthesis.speak(sounds[id] || soundError);
 		};
 	} else {
@@ -196,7 +197,7 @@ angular.module('shiitApp')
 
 	// whenever it goes from rest to work or vice versa...
 	$scope.$on('ians-timer:tick', function (event, data) {
-		if ( (data.time < 4) && ($scope.stateName === 'rest') ){
+		if ( (data.displayTime < 4) && ($scope.stateName === 'rest') ){
 			playSound('count'+data.displayTime); // "3", "2", or "1"
 		}
 		$scope.data.currentSecond = data.displayTime;

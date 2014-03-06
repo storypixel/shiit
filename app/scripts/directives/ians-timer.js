@@ -29,7 +29,7 @@ angular.module('iansTimer', [])
 			controller: ['$scope', '$element', '$attrs', '$filter', function ($scope, $element, $attrs, $filter) {
 				var stop,
 				//startingTime, // when the timer was started
-				stoppingTime, // when the timer was last stopped. Useful when timer is "paused"
+				//stoppingTime, // when the timer was last stopped. Useful when timer is "paused"
 				updateEvery = 1000, // milliseconds
 				currentRound,
 				roundLength,
@@ -37,59 +37,38 @@ angular.module('iansTimer', [])
 				oldTime,
 				newTime,
 				cycleObjectIndex,
-				//lastCycleObjectIndex,
 				roundSentinel, // a way to track when we get to a new round
-				//lastRoundSentinel,
 				cumulativeValue,
-				//timeAsIndex,
 				sumOfTime,
 				warmupLeft,
 				cycleLength,
 				cycleName,
 				cycles = angular.copy($scope.cyclesData);
-				//displayTime;
-
-				//console.log('cycles?');
-				//console.log(cycles);
 
 				function initVariables() {
 					if (!angular.isDefined( cycles )){
 						$scope.$emit('ians-timer:error-data');
-						//console.log('cycles data is not defined, that is an error');
 						return;
 					}
 
 					var slen,
 					cyclesLeftToAddToCribSheet,
 					currentIndex,
-					stackOverflowTrick;//,
-					//lastRestSubtracted = 0; // maybe this isn't for the ians=timer?
+					stackOverflowTrick;
 
 					sumOfTime = 0;
 					warmupLeft = $scope.warmup = $scope.warmup || 10;
 					slen = cycles.length;
-					// Assign round length in seconds
+
+          // Assign round length in seconds
 					angular.forEach( cycles, function(obj, i){
-						////console.log('what up '+i);
 						sumOfTime = sumOfTime + obj.value;
-						////console.log(sumOfTime+'?');
-						//obj.cumulativeValue = sumOfTime; // this helps calculate time visually
 						cycles[i].cumulativeValue = sumOfTime;
-						//lastRestSubtracted = obj.value;
 					});
-											// //console.log('sanity checking pre');
-											// //console.log(cycles);
-										// var s = $interval(function(){
-										// 	//console.log('sanity checking');
-										// 	//console.log(cycles);
-										// }, updateEvery/2);
 
-					//console.log('check1');
-					//console.log(cycles);
+          //
 					roundLength = sumOfTime;
-					$scope.targetSeconds = (sumOfTime * $scope.totalRounds); // - lastRestSubtracted;
-
-					$scope.time = $scope.targetSeconds;
+					$scope.time = sumOfTime * $scope.totalRounds;
 					cyclesLeftToAddToCribSheet = $scope.totalRounds * slen; // - 1; // cycles are encoded as strings. minus 1 because we get rid of the last rest period
 					cycleObjectIndex = roundSentinel = currentRound = oldTime = cycleLength = 0; // how many times we go through each set of cycles
 
@@ -104,13 +83,8 @@ angular.module('iansTimer', [])
 					// make cribSheet a string. this could support only 10 non-readytime states
 					cribSheet = cribSheet.concat(new Array( $scope.warmup + 1 ).join('w').split(''));
 					cribSheet = cribSheet.join('');
-					////console.log(cribSheet);
 
-					stoppingTime = undefined; // we haven't stopped yet
 					$scope.time = $scope.time + $scope.warmup;
-					//writeTime($scope.warmup); // hits zero only when time has ran out
-
-					//startingTime = Date.now(); // we start now
 				}
 
 				// Update the time to the screen in a way that reflects current round and cycle
@@ -122,11 +96,6 @@ angular.module('iansTimer', [])
 					var ti = $scope.time - 1,
 							thisi = ti % roundLength,
 							secondsLeftInCycle;
-							//secondsLeftInRound = 1 + thisi;
-
-
-					// this should tell whether this second will belong to rest or work, or the ready time
-					//roundSentinel = cycleObjectIndex && !isNaN(cycleObjectIndex) && cycles[ cycleObjectIndex ].cumulativeValue;
 
 					cycleObjectIndex = cribSheet.charAt( ti );
 
@@ -138,42 +107,31 @@ angular.module('iansTimer', [])
 						writeTime(warmupLeft--); // hits zero only when time has ran out
 						return;
 					}
-					////console.log('here we go'+cribSheet);
-
 
 					cycleName   = cycles[ cycleObjectIndex ].name; // determine this cycle's name
 					cycleLength  = +cycles[ cycleObjectIndex ].value; // determine this cycle's name
 					cumulativeValue = +cycles[ cycleObjectIndex ].cumulativeValue;
 					secondsLeftInCycle = thisi - (roundLength - cumulativeValue);
-					////console.log(cycleName + thisi);
-					//console.log('check2');
-					//console.log(cycles);
-
-
 
 					// if time is :25 and work is 10 and rest is 5... 10 seconds into next round.
-
 					if ((secondsLeftInCycle + 1) === cycleLength){
 						if ((thisi + 1) === roundLength){
 							currentRound++;
-							////console.log('round incredmented to ' + currentRound);
 						}
-						////console.log('cycle changed to  ' + cycleName);
 						$scope.$emit('ians-timer:cycle-changed', {'cycle' : cycleName, 'round' : currentRound});
 					}
-
+          // write time
 					writeTime(secondsLeftInCycle + 1); // hits zero only when time has ran out
 				}
 
 				function tick(){
 					if ($scope.time > 0) {
 						$scope.running = true;
-						//$scope.time = $scope.targetSeconds - (Date.now() - startingTime) / 1000;
 						updateTime(); // update DOM
 						$scope.time = $scope.time - updateEvery/1000;
 					} else {
 						$scope.andDone();
-					} // //console.log('tick');
+					}
 				}
 
 				// Put the time on the screen. not sure if this is the encapsulated way to do it
@@ -201,7 +159,7 @@ angular.module('iansTimer', [])
 				// Stop the timer from running but don't reset it
 				$scope.justStop = function(){
 					$interval.cancel(stop);
-					stoppingTime = Date.now();
+					//stoppingTime = Date.now();
 					$scope.running = false;
 					$scope.$emit('ians-timer:stopped');
 				};
@@ -209,7 +167,6 @@ angular.module('iansTimer', [])
 				// stop here means pause
 				$scope.$on('ians-timer:stop', function(){
 					$scope.justStop();
-					$scope.$emit('ians-timer:stopped');
 				});
 
 				// completely reset
@@ -221,27 +178,15 @@ angular.module('iansTimer', [])
 
 				$scope.$on('ians-timer:start', function(){
 					// If stop is already defined, we are resuming
-					if ( angular.isDefined(stop) ){
-						//startingTime += Date.now() - stoppingTime;
-					} else {
-						// Must be the first time the timer has ran, do it right
-						////console.log('initting the variables');
+					if ( !angular.isDefined(stop) ){
 						initVariables();
 					}
 
 					// start the UI update process; save the timeoutId for canceling
 					tick();
 					stop = $interval(tick, updateEvery);
-
 					$scope.$emit('ians-timer:started');
-
 				});
-
-				// observe changes to interpolated attribute
-				// $attrs.$observe('seconds', function(value) {
-				//   //console.log('seconds has changed value to ' + value);
-				// });
-
 			}]
 		};
 	}

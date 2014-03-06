@@ -5,12 +5,12 @@
 //@import url(http://basehold.it/24);
 
 @font-face {
-    font-family: HelveticaSauce;
+    font-family: CondensedFont;
     src: url("/fonts/UniversLTStd-ThinUltraCn.otf") format("opentype");
 }
 
 @font-face {
-    font-family: HelveticaSauce;
+    font-family: CondensedFont;
     font-weight: bold;
     src: url("/fonts/UniversLTStd-UltraCn.otf") format("opentype");
 }
@@ -23,10 +23,11 @@
 
 html{ height: 100%; }
 body{
-    margin: 0;
     color: $baseline-color;
+    font-family: $font-family-small-screen;
     font-size: $fs-normal;
     line-height: 1;
+    margin: 0;
     min-height: 100%;
 }
 
@@ -39,7 +40,8 @@ footer,
 
 .timer,
 .timer-action-col,
-.big-time time{
+.big-time time,
+.evergreen-menu{
   @include col(12);
 }
 .current-state-col{
@@ -79,15 +81,11 @@ footer,
 .timer{
     font-size: $fs-larger;
     letter-spacing: 1px;
-    font-family: HelveticaSauce, sans-serif;
     text-transform: uppercase;
     font-weight: bold;
     @media(min-width: $tablet-width) {
-        //font-size: 64px;
-        //text-indent: 777px;
         text-transform: none;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-
+        font-family: $font-family-large-screen;
     }
     *{ -webkit-user-select: none; user-select: none; }
 
@@ -161,9 +159,7 @@ footer,
     padding: 0 .25em;
     @media(min-width: $tablet-width) {
         line-height: 0;
-        &.done{
-            padding-bottom: 4px;
-        }
+        &.done{ padding-bottom: 4px; }
     }
 }
 
@@ -254,18 +250,46 @@ button{
   //background: rgba(255,255,255,.1);
   border-top: 1px $clr-border solid;
   bottom: 0;
-  min-height: 48px;
+  font-size: $fs-larger;
   left: 0;
+  min-height: 48px;
   padding: 12px 0;
   right: 0;
+  @media(min-width: $tablet-width) {
+      text-transform: none;
+      font-family: $font-family-large-screen;
+      font-weight: 200;
+  }
   .logo{
-    margin: 0 auto;
+    float: left;
     height: 48px;
+    margin-left: 15px;
     width: 48px;
     background: transparent url(../images/turnip-logo.svg) no-repeat center center;
     background-size: cover;
   }
+  .social{
+    float:right;
+    //background: rgba(2,2,2,.2);
+    margin-right: 15px;
+    //margin-top: 12px;
+    margin-left: 15px;
+    width: 50%;
+    a.facebook{
+      text-indent: -9999em;
+      display: block;
+      background: transparent url(../images/facebook14.svg) no-repeat center center;
+      background-size: cover;
+      width: 48px;
+      height: 48px;
+      float: right;
+    }
+    @media(min-width: $tablet-width) {
+      //margin-top: 9px;
+    }
+  }
 }
+
 
 .multipled:after{
   @media(min-width: $tablet-width) {
