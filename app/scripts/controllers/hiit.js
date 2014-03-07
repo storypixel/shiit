@@ -110,7 +110,7 @@ angular.module('shiitApp')
 	}
 
 	function updateCycle(workTime, restTime){
-		//console.log('updating cycle');
+		//
 		var o = [
 			{'name' : 'work', 'value' : +workTime}, // convert to number with +
 			{'name' : 'rest', 'value' : +restTime}
@@ -197,7 +197,8 @@ angular.module('shiitApp')
 
 	// whenever it goes from rest to work or vice versa...
 	$scope.$on('ians-timer:tick', function (event, data) {
-		if ( (data.displayTime < 4) && ($scope.stateName === 'rest') ){
+		console.log($scope.stateName);
+		if ( (data.displayTime < 4) && ( ($scope.stateName === 'rest') || ($scope.stateName === 'work') ) ){
 			playSound('count'+data.displayTime); // "3", "2", or "1"
 		}
 		$scope.data.currentSecond = data.displayTime;
