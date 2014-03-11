@@ -6,10 +6,12 @@ angular.module('shiitApp')
 	pauseSound = function(){},
 	aPhrase = function(){},
 	sounds,
+	speechEnabled = false,
 	speech = ('speechSynthesis' in window);
 
 	// second clause added to allow work in FireFox
-	if (speech && window.SpeechSynthesisUtterance) {
+	// temporarily disabling speech
+	if (speechEnabled && speech && window.SpeechSynthesisUtterance) {
 		aPhrase = function(){
 			var possibilities = [
 				'That was awesome work.',
@@ -52,10 +54,10 @@ angular.module('shiitApp')
 		};
 	} else {
 		var masterSound = new window.buzz.sound( 'sounds/master', { formats: [ 'mp3' ] }),
-			hintSoundRange = [3, 4],
-			roundStartSoundRange = [0, 2.8],
-			roundEndSoundRange = [10, 11],
-			doneSoundRange = [6, 8],
+			hintSoundRange = [10, 13], // 3 second count
+			roundStartSoundRange = [2, 4],
+			roundEndSoundRange = [4, 6],
+			doneSoundRange = [8, 10],
 			soundPromise;
 
 		sounds = {
@@ -64,14 +66,15 @@ angular.module('shiitApp')
 			'work' : roundStartSoundRange,
 			'ready': hintSoundRange,
 			'finished' : doneSoundRange,
-			'count3' : hintSoundRange,
-			'count2' : hintSoundRange,
-			'count1' : hintSoundRange,
+			 'count3' : hintSoundRange,
+			 //'count2' : hintSoundRange,
+			//'count1' : hintSoundRange,
 			'gotime' : hintSoundRange
 		};
 
 		playSound = function (id){
-			var range = sounds[id] || sounds.count3;
+			var range = sounds[id];
+			if (!range){ return; }
 			if ( angular.isDefined(soundPromise) ){
 				$timeout.cancel(soundPromise);
 			}
