@@ -32,7 +32,7 @@ body{
 }
 
 
-/* GRID */
+/* GRID and other LAYOUT POSITIONING */
 footer,
 .dimension{
   @include col-wrap;
@@ -61,6 +61,17 @@ footer,
 .adjust-work{@include col(5);}
 .dimension-label{ @include col(3); }
 
+.skip-around{
+  position: absolute;
+  top:48px;
+  &.next{
+    right: 12px;
+  }
+  &.previous{
+    left: 12px;
+  }
+}
+
 @media(min-width: $tablet-width) {
   .time-total-col, .placeholder-col{
       @include col(4);
@@ -74,7 +85,6 @@ footer,
   .dimension-time-value{
       @include col(4);
   }
-
 }
 
 /* STRUCTURE */
@@ -112,6 +122,7 @@ footer,
 .dimension, .total-time{
     padding-top: 15px;
     padding-bottom: 15px;
+    position: relative;
 }
 
 .dimension{
@@ -190,6 +201,15 @@ button{
         padding: 12px 10px 0px;
         border-radius: 50%;
 
+    }
+    &.previous, &.next{
+      border: 0;
+      height: 24px*3;
+      width: 24px*3;
+      z-index: 1000;
+      @media(min-width: $tablet-width) {
+          padding: 0;
+      }
     }
     &.less, &.more{
         background-color: transparent;

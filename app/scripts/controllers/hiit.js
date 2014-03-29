@@ -132,6 +132,9 @@ angular.module('shiitApp')
 		restLimit = limitRange(0, 60),
 		repsLimit = limitRange(1, 90);
 
+	$scope.showNext = false;
+	$scope.showPrevious = false;
+
 	$scope.goToWork = function(){
 		playSound('gotime'); // "3", "2", or "1"
 		$state.transitionTo('hiit.work');
@@ -205,6 +208,9 @@ angular.module('shiitApp')
 			playSound('count'+data.displayTime); // "3", "2", or "1"
 		}
 		$scope.data.currentSecond = data.displayTime;
+		$scope.showNext = $scope.currentRound < $scope.data.numReps;
+		$scope.showPrevious = (data.time !== $scope.data.totalSeconds);
+		console.log('time is ' + data.time);
 		save();
 	});
 

@@ -20,11 +20,22 @@ angular.module('shiitApp')
 	$scope.stopTimer = function (){
 		$scope.$broadcast('ians-timer:stop');
 	};
-	
+
+	$scope.goToPreviousCycle = function (){
+		$scope.stopTimer();
+		$scope.$broadcast('ians-timer:go-to-previous-cycle');
+	};
+
+
+	$scope.goToNextCycle = function (){
+		$scope.stopTimer();
+		$scope.$broadcast('ians-timer:go-to-next-cycle');
+	};
+
 	// Heard when the timer has stopped or paused (same)
 	$scope.$on('ians-timer:stopped', function () {
 		$scope.timerRunning = false;
-		// $scope.digest();		
+		// $scope.digest();
 	});
 
 	// Heard when the timer has started or resumed (same)
@@ -48,7 +59,7 @@ angular.module('shiitApp')
 		$scope.startTimer();
 		// Access to all the view config properties.
 		// and one special property 'targetView'
-		// viewConfig.targetView 
+		// viewConfig.targetView
 	});
 
 });

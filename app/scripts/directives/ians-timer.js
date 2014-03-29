@@ -41,9 +41,16 @@ angular.module('iansTimer', [])
 				cumulativeValue,
 				sumOfTime,
 				warmupLeft,
+        secondsLeftInCycle,
 				cycleLength,
 				cycleName,
-				cycles = angular.copy($scope.cyclesData);
+        currentRoundReadyToChange,
+				cycles = angular.copy($scope.cyclesData),
+        MINTIME, // the least for $scope.time
+        MAXTIME, // the most for $scope.time
+        ti,
+        thisi,
+        thisRound;
 
 				function initVariables() {
 					if (!angular.isDefined( cycles )){
@@ -57,7 +64,8 @@ angular.module('iansTimer', [])
 					stackOverflowTrick;
 
 					sumOfTime = 0;
-					warmupLeft = $scope.warmup = $scope.warmup || 10;
+          currentRoundReadyToChange = true; // else the round won't update on first run
+					warmupLeft = $scope.warmup = $scope.warmup || 0;
 					slen = cycles.length;
 
           // Assign round length in seconds
@@ -68,9 +76,14 @@ angular.module('iansTimer', [])
 
           //
 					roundLength = sumOfTime;
-					$scope.time = sumOfTime * $scope.totalRounds;
+          MINTIME = 0;
+					$scope.time = MAXTIME = sumOfTime * $scope.totalRounds;
 					cyclesLeftToAddToCribSheet = $scope.totalRounds * slen; // - 1; // cycles are encoded as strings. minus 1 because we get rid of the last rest period
-					cycleObjectIndex = roundSentinel = currentRound = oldTime = cycleLength = 0; // how many times we go through each set of cycles
+					cycleObjectIndex = 0;
+          roundSentinel = 0;
+          currentRound = 0;
+          oldTime = 0;
+          cycleLength = 0; // how many times we go through each set of cycles
 
 					// Make a cribSheet that a guide to know what cycle each second falls into
 					cribSheet = []; //
@@ -88,14 +101,11 @@ angular.module('iansTimer', [])
 				}
 
 				// Update the time to the screen in a way that reflects current round and cycle
-				function updateTime() {
+				function updateTime(manualControl) {
 
-					/*jslint bitwise: true */ // ^ jslint was complaining about bitwise. turn that off.
-					//timeAsIndex = $scope.time; // ($scope.time - 0.001) | 0; // would be a problem if time goes to -1 or less
-					/*jslint bitwise: false */
-					var ti = $scope.time - 1,
-							thisi = ti % roundLength,
-							secondsLeftInCycle;
+          ti = $scope.time - 1,
+					thisi = ti % roundLength,
+          thisRound;
 
 					cycleObjectIndex = cribSheet.charAt( ti );
 
@@ -104,20 +114,34 @@ angular.module('iansTimer', [])
 							$scope.$emit('ians-timer:cycle-changed', {'cycle' : 'ready', 'round' : 0});
 						}
 						// let it hit zero
-						writeTime(warmupLeft--); // hits zero only when time has ran out
+            cycleLength = $scope.warmup;
+            warmupLeft = warmupLeft - 1;
+            secondsLeftInCycle = warmupLeft;
+						writeTime(secondsLeftInCycle); // hits zero only when time has ran out
 						return;
 					}
 
-					cycleName   = cycles[ cycleObjectIndex ].name; // determine this cycle's name
+					cycleName = cycles[ cycleObjectIndex ].name; // determine this cycle's name
 					cycleLength  = +cycles[ cycleObjectIndex ].value; // determine this cycle's name
 					cumulativeValue = +cycles[ cycleObjectIndex ].cumulativeValue;
+          // determine how many seconds are left in rest or work
 					secondsLeftInCycle = thisi - (roundLength - cumulativeValue);
-
+          // calculate what round we are on
+          thisRound = Math.ceil($scope.totalRounds - ti / sumOfTime);
+          //console.log("thisRound is "+thisRound);
 					// if time is :25 and work is 10 and rest is 5... 10 seconds into next round.
-					if ((secondsLeftInCycle + 1) === cycleLength){
-						if ((thisi + 1) === roundLength){
-							currentRound++;
-						}
+					//console.log('testing seconds left in cycle: '+secondsLeftInCycle );
+          if (secondsLeftInCycle === 0){
+            currentRoundReadyToChange = true;
+          }
+          if (thisRound !== currentRound){
+            currentRound = thisRound;
+            currentRoundReadyToChange = false;
+          }
+          if (!manualControl && ((secondsLeftInCycle + 1) === cycleLength)){
+						// if ((currentRoundReadyToChange === true) && ((thisi + 1) === roundLength)){
+            //
+						// }
 						$scope.$emit('ians-timer:cycle-changed', {'cycle' : cycleName, 'round' : currentRound});
 					}
           // write time
@@ -138,7 +162,7 @@ angular.module('iansTimer', [])
 				function writeTime(t){
 					newTime = $filter('digitalTime')(t);
 					$element.text(newTime); // never hits zero until all is complete
-					$scope.$emit('ians-timer:tick', {'displayTime' : t, 'time' : $scope.time});
+					$scope.$emit('ians-timer:tick', {'displayTime' : t, 'time' : $scope.time, cycleLength: cycleLength});
 				}
 
 				// Destroy
@@ -146,7 +170,7 @@ angular.module('iansTimer', [])
 					$scope.andDone();
 				});
 
-				// We are done running the timer
+				// We are done running the timer, tie up lose ends to prevent leaks
 				$scope.andDone = function(){
 					if ( angular.isDefined( stop ) ){
 						$scope.justStop(); // just stop, don't erase stop
@@ -187,6 +211,42 @@ angular.module('iansTimer', [])
 					stop = $interval(tick, updateEvery);
 					$scope.$emit('ians-timer:started');
 				});
+
+        // go to the previous cycle now
+        $scope.$on('ians-timer:go-to-previous-cycle', function(){
+          var delta = cycleLength - secondsLeftInCycle;
+          //console.log('----\n\nprevious cycle '+secondsLeftInCycle);
+          //console.log('delta '+delta);
+
+
+          // KLUDGE: off-by-one error
+          // I don't know why this works exactly, probalby points to a logical error
+          // if the timer isn't running and we are at a "full count" for a cycle
+          // then let's increment delta. Otherwise going forward is one second short
+          if (!$scope.running && (secondsLeftInCycle === (cycleLength - 1))){
+            delta = cycleLength;
+          }
+          $scope.justStop();
+          $scope.time = $scope.time + delta;
+          updateTime();
+        });
+        // go to the next cycle now
+        $scope.$on('ians-timer:go-to-next-cycle', function(){
+          var delta = secondsLeftInCycle;
+
+          // KLUDGE: off-by-one error
+          // I don't know why this works exactly, probalby points to a logical error
+          // if the timer isn't running and we are at a "full count" for a cycle
+          // then let's increment delta. Otherwise going forward is one second short
+          if (!$scope.running && (secondsLeftInCycle === (cycleLength - 1))){
+            delta = delta + 1;
+          }
+
+          $scope.justStop();
+          $scope.time = $scope.time - delta;
+          updateTime();
+        });
+
 			}]
 		};
 	}

@@ -10,9 +10,11 @@
 			</nav>
 		</div>
 		<div class="big-time dimension row">
+			<button class="skip-around action previous" ng-click="goToPreviousCycle()" ng-show="$parent.showPrevious">←</button>
 			<time>
 				<div ians-timer ng-attr-cycle="$parent.data.cycle" ng-attr-seconds="$parent.data.totalSeconds" ng-attr-rounds="$parent.data.numReps">&nbsp;</div>
 			</time>
+			<button class="skip-around action next" ng-click="goToNextCycle()" ng-show="$parent.showNext">→</button>
 			<!-- <timer countdown="$parent.data.totalSeconds" interval="1000" autoStart="false">{{minutes}}:{{seconds | padWithZeros}}</timer> -->
 			<!-- <div ians-timer ng-attr-seconds="$parent.data.totalSeconds" ng-attr-rounds="$parent.data.numReps">place</div> -->
 		</div>
