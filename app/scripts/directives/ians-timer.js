@@ -42,7 +42,8 @@ angular.module('iansTimer', [])
 				sumOfTime,
 				warmupLeft,
         secondsLeftInCycle,
-				cycleLength,
+        prevCycleLength,
+        cycleLength,
 				cycleName,
         currentRoundReadyToChange,
 				cycles = angular.copy($scope.cyclesData),
@@ -65,7 +66,7 @@ angular.module('iansTimer', [])
 
 					sumOfTime = 0;
           currentRoundReadyToChange = true; // else the round won't update on first run
-					warmupLeft = $scope.warmup = $scope.warmup || 0;
+					warmupLeft = $scope.warmup = $scope.warmup || 10;
 					slen = cycles.length;
 
           // Assign round length in seconds
@@ -83,7 +84,8 @@ angular.module('iansTimer', [])
           roundSentinel = 0;
           currentRound = 0;
           oldTime = 0;
-          cycleLength = 0; // how many times we go through each set of cycles
+          prevCycleLength = 0;
+          cycleLength = 0;
 
 					// Make a cribSheet that a guide to know what cycle each second falls into
 					cribSheet = []; //
@@ -114,6 +116,7 @@ angular.module('iansTimer', [])
 							$scope.$emit('ians-timer:cycle-changed', {'cycle' : 'ready', 'round' : 0});
 						}
 						// let it hit zero
+            prevCycleLength = 0;
             cycleLength = $scope.warmup;
             warmupLeft = warmupLeft - 1;
             secondsLeftInCycle = warmupLeft;
@@ -122,7 +125,8 @@ angular.module('iansTimer', [])
 					}
 
 					cycleName = cycles[ cycleObjectIndex ].name; // determine this cycle's name
-					cycleLength  = +cycles[ cycleObjectIndex ].value; // determine this cycle's name
+          prevCycleLength = +cycles[ Math.abs(cycleObjectIndex - 1) ].value;
+          cycleLength  = +cycles[ cycleObjectIndex ].value; // determine this cycle's name
 					cumulativeValue = +cycles[ cycleObjectIndex ].cumulativeValue;
           // determine how many seconds are left in rest or work
 					secondsLeftInCycle = thisi - (roundLength - cumulativeValue);
@@ -139,9 +143,6 @@ angular.module('iansTimer', [])
             currentRoundReadyToChange = false;
           }
           if (!manualControl && ((secondsLeftInCycle + 1) === cycleLength)){
-						// if ((currentRoundReadyToChange === true) && ((thisi + 1) === roundLength)){
-            //
-						// }
 						$scope.$emit('ians-timer:cycle-changed', {'cycle' : cycleName, 'round' : currentRound});
 					}
           // write time
@@ -215,16 +216,17 @@ angular.module('iansTimer', [])
         // go to the previous cycle now
         $scope.$on('ians-timer:go-to-previous-cycle', function(){
           var delta = cycleLength - secondsLeftInCycle;
-          //console.log('----\n\nprevious cycle '+secondsLeftInCycle);
+          console.log('----\n\nprevious cycle '+secondsLeftInCycle);
           //console.log('delta '+delta);
 
-
+          console.log("the cycleLength is "+cycleLength);
+          console.log("-------");
           // KLUDGE: off-by-one error
           // I don't know why this works exactly, probalby points to a logical error
           // if the timer isn't running and we are at a "full count" for a cycle
           // then let's increment delta. Otherwise going forward is one second short
           if (!$scope.running && (secondsLeftInCycle === (cycleLength - 1))){
-            delta = cycleLength;
+            delta = (prevCycleLength > 0) ? previousCycleLength : cycleLength; //presumes 2 cycles
           }
           $scope.justStop();
           $scope.time = $scope.time + delta;

@@ -209,7 +209,7 @@ angular.module('shiitApp')
 		}
 		$scope.data.currentSecond = data.displayTime;
 		$scope.showNext = $scope.currentRound < $scope.data.numReps;
-		$scope.showPrevious = (data.time !== $scope.data.totalSeconds);
+		$scope.showPrevious = ($scope.stateName !== 'ready') && (data.time !== $scope.data.totalSeconds);
 		console.log('time is ' + data.time);
 		save();
 	});
