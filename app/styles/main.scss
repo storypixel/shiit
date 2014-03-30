@@ -65,10 +65,10 @@ footer,
   position: absolute;
   top:48px;
   &.next{
-    right: 12px;
+    right: 0;
   }
   &.previous{
-    left: 12px;
+    left: 0;
   }
 }
 
@@ -84,6 +84,14 @@ footer,
   .dimension-label,
   .dimension-time-value{
       @include col(4);
+  }
+  .skip-around{
+    &.next{
+      right: 12px;
+    }
+    &.previous{
+      left: 12px;
+    }
   }
 }
 
@@ -204,10 +212,12 @@ button{
     }
     &.previous, &.next{
       border: 0;
-      height: 24px*3;
-      width: 24px*3;
+      height: 48px;
+      width: 48px;
       z-index: 1000;
       @media(min-width: $tablet-width) {
+          height: 24px*3;
+          width: 24px*3;
           padding: 0;
       }
     }

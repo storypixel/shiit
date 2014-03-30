@@ -42,7 +42,7 @@ angular.module('iansTimer', [])
 				sumOfTime,
 				warmupLeft,
         secondsLeftInCycle,
-        prevCycleLength,
+        previousCycleLength,
         cycleLength,
 				cycleName,
         currentRoundReadyToChange,
@@ -84,7 +84,7 @@ angular.module('iansTimer', [])
           roundSentinel = 0;
           currentRound = 0;
           oldTime = 0;
-          prevCycleLength = 0;
+          previousCycleLength = 0;
           cycleLength = 0;
 
 					// Make a cribSheet that a guide to know what cycle each second falls into
@@ -116,7 +116,7 @@ angular.module('iansTimer', [])
 							$scope.$emit('ians-timer:cycle-changed', {'cycle' : 'ready', 'round' : 0});
 						}
 						// let it hit zero
-            prevCycleLength = 0;
+            previousCycleLength = 0;
             cycleLength = $scope.warmup;
             warmupLeft = warmupLeft - 1;
             secondsLeftInCycle = warmupLeft;
@@ -125,7 +125,7 @@ angular.module('iansTimer', [])
 					}
 
 					cycleName = cycles[ cycleObjectIndex ].name; // determine this cycle's name
-          prevCycleLength = +cycles[ Math.abs(cycleObjectIndex - 1) ].value;
+          previousCycleLength = +cycles[ Math.abs(cycleObjectIndex - 1) ].value;
           cycleLength  = +cycles[ cycleObjectIndex ].value; // determine this cycle's name
 					cumulativeValue = +cycles[ cycleObjectIndex ].cumulativeValue;
           // determine how many seconds are left in rest or work
@@ -226,7 +226,7 @@ angular.module('iansTimer', [])
           // if the timer isn't running and we are at a "full count" for a cycle
           // then let's increment delta. Otherwise going forward is one second short
           if (!$scope.running && (secondsLeftInCycle === (cycleLength - 1))){
-            delta = (prevCycleLength > 0) ? previousCycleLength : cycleLength; //presumes 2 cycles
+            delta = (previousCycleLength > 0) ? previousCycleLength : cycleLength; //presumes 2 cycles
           }
           $scope.justStop();
           $scope.time = $scope.time + delta;
