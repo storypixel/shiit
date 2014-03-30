@@ -2,6 +2,7 @@
 @import "variables";
 @import "mixins";
 
+
 //@import url(http://basehold.it/24);
 
 @font-face {
@@ -265,6 +266,25 @@ button{
     }
 }
 
+.action-buttons-wrap{
+  margin: 0 auto;
+  height: 96px;
+  width: 96px;
+  @media(min-width: $tablet-width) {
+    height: 132px;
+    width: 132px;
+  }
+}
+
+#progress{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
 /* PIECES */
 .dimension-label{
     span{
@@ -394,4 +414,12 @@ button{
             line-height: .65;
         }
     }
+}
+
+// PROGRESS BAR
+.path {
+  @include transition (all .25s ease-in-out);  
+  stroke-dasharray: 416; //420
+  stroke-dashoffset: 0;
+  /*animation: dash 5s linear  infinite;*/
 }

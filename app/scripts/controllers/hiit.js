@@ -130,10 +130,12 @@ angular.module('shiitApp')
 
 	var workLimit = limitRange(5, 180),
 		restLimit = limitRange(0, 60),
-		repsLimit = limitRange(1, 90);
+		repsLimit = limitRange(1, 90),
+		progressLineLength = 416;
 
 	$scope.showNext = false;
 	$scope.showPrevious = false;
+	$scope.progressStyle = {'stroke-dashoffset': 0};
 
 	$scope.goToWork = function(){
 		playSound('gotime'); // "3", "2", or "1"
@@ -203,14 +205,19 @@ angular.module('shiitApp')
 
 	// whenever it goes from rest to work or vice versa...
 	$scope.$on('ians-timer:tick', function (event, data) {
-		console.log($scope.stateName);
+		//console.log($scope.stateName);
 		if ( (data.displayTime < 4) && ( ($scope.stateName === 'rest') || ($scope.stateName === 'work') ) ){
 			playSound('count'+data.displayTime); // "3", "2", or "1"
 		}
 		$scope.data.currentSecond = data.displayTime;
+		// show next if there are more rounds to go
 		$scope.showNext = $scope.currentRound < $scope.data.numReps;
+		// show previous if this isn't the ready countdown AND if we aren't at the very beginning second
 		$scope.showPrevious = ($scope.stateName !== 'ready') && (data.time !== $scope.data.totalSeconds);
-		console.log('time is ' + data.time);
+		//console.log('time is ' + data.time);
+		$scope.progress = ($scope.stateName !== 'ready') ? ( (data.time - $scope.data.restSeconds) / ($scope.data.totalSeconds - $scope.data.restSeconds) ) : 0;
+		$scope.progressStyle = {'stroke-dashoffset': progressLineLength * $scope.progress};
+
 		save();
 	});
 

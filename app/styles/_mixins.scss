@@ -21,6 +21,13 @@
     &:after { clear: both; }
 }
 
+/* TRANSFORM  */
+@mixin transform($params) {
+    -webkit-transform: $params;
+    -moz-transform:    $params;
+    transform:         $params;
+}
+
 // Left out moz because it's a small %
 @mixin box-shadow($top, $left, $blur, $spread, $color, $inset:"") {
     -webkit-box-shadow: $top $left $blur $spread $color #{$inset};
@@ -44,7 +51,7 @@
 
 // WIP
 // SIMPLISTIC COLUMN MIXIN
-// Pass $span which is the width of the column from 
+// Pass $span which is the width of the column from
 // an evenly divided grid of 12 parts
 $gutter: 15px; // Variable for columns. Can key off this more TODO
 
@@ -52,7 +59,7 @@ $gutter: 15px; // Variable for columns. Can key off this more TODO
     float: left;
     min-height: 1px;
     padding-left: $gutter;
-    padding-right: $gutter; 
+    padding-right: $gutter;
     position: relative;
     width: 100/12 * $span * 1%; // Could make 12 a variable?
 }

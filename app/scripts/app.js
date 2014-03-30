@@ -15,7 +15,7 @@ angular.module('shiitApp', [
     // For any unmatched url, send to /route1
     $urlRouterProvider.when('/endless/nothing', 'partials/nothing.html');
     $urlRouterProvider.otherwise('/hiit');
-      
+
     $stateProvider
       .state('hiit', {
         url: '/hiit',
@@ -35,7 +35,7 @@ angular.module('shiitApp', [
       });
 
     $locationProvider.html5Mode(true);
-      
+
     // Intercept 401s and 403s and redirect you to login
     $httpProvider.interceptors.push(['$q', '$location', function($q, $location) {
       return {
