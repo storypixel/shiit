@@ -135,7 +135,7 @@ angular.module('shiitApp')
 
 	$scope.showNext = false;
 	$scope.showPrevious = false;
-	$scope.progressStyle = {'stroke-dashoffset': 0};
+	$scope.progressStyle = {'stroke-dashoffset': progressLineLength};
 
 	$scope.goToWork = function(){
 		playSound('gotime'); // "3", "2", or "1"
@@ -195,6 +195,7 @@ angular.module('shiitApp')
 
 
 		}
+		$scope.progressStyle = {'stroke-dashoffset': ($scope.progress === 0) ? progressLineLength : Math.floor(progressLineLength * $scope.progress)};
 		$scope.stateName = data.cycle;
 	});
 
@@ -216,7 +217,6 @@ angular.module('shiitApp')
 		$scope.showPrevious = ($scope.stateName !== 'ready') && (data.time !== $scope.data.totalSeconds);
 		//console.log('time is ' + data.time);
 		$scope.progress = ($scope.stateName !== 'ready') ? ( (data.time - $scope.data.restSeconds) / ($scope.data.totalSeconds - $scope.data.restSeconds) ) : 0;
-		$scope.progressStyle = {'stroke-dashoffset': progressLineLength * $scope.progress};
 
 		save();
 	});

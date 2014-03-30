@@ -418,8 +418,9 @@ button{
 
 // PROGRESS BAR
 .path {
-  @include transition (all .25s ease-in-out);  
+  @include transition (all .25s ease-in-out);
   stroke-dasharray: 416; //420
   stroke-dashoffset: 0;
+  stroke-opacity: 1;  
   /*animation: dash 5s linear  infinite;*/
 }
