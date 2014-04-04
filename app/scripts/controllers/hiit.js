@@ -192,10 +192,7 @@ angular.module('shiitApp')
 				return;
 			}
 			playSound('rest');
-
-
 		}
-		$scope.progressStyle = {'stroke-dashoffset': ($scope.progress === 0) ? progressLineLength : Math.floor(progressLineLength * $scope.progress)};
 		$scope.stateName = data.cycle;
 	});
 
@@ -217,6 +214,8 @@ angular.module('shiitApp')
 		$scope.showPrevious = ($scope.stateName !== 'ready') && (data.time !== $scope.data.totalSeconds);
 		//console.log('time is ' + data.time);
 		$scope.progress = ($scope.stateName !== 'ready') ? ( (data.time - $scope.data.restSeconds) / ($scope.data.totalSeconds - $scope.data.restSeconds) ) : 0;
+		// update the circular progress thing
+		$scope.progressStyle = {'stroke-dashoffset': ($scope.progress === 0) ? progressLineLength : Math.floor(progressLineLength * $scope.progress)};
 
 		save();
 	});

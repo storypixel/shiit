@@ -357,11 +357,11 @@ button{
   text-align: center;
 }
 
-  .dimension-time-value{
-    text-align: right;
-    @media(min-width: $tablet-width) {
-      text-align: center;
-    }
+.dimension-time-value{
+  text-align: right;
+  @media(min-width: $tablet-width) {
+    text-align: center;
+  }
 }
 
 .action-col,
@@ -421,6 +421,6 @@ button{
   @include transition (all .25s ease-in-out);
   stroke-dasharray: 416; //420
   stroke-dashoffset: 0;
-  stroke-opacity: 1;  
+  stroke-opacity: 1;
   /*animation: dash 5s linear  infinite;*/
 }
