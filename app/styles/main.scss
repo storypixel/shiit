@@ -21,7 +21,6 @@
   box-sizing: border-box;
 }
 
-
 html{ height: 100%; }
 body{
     color: $baseline-color;
@@ -32,8 +31,12 @@ body{
     min-height: 100%;
 }
 
-
 /* GRID and other LAYOUT POSITIONING */
+.container{
+  margin: 0 auto;
+  max-width: 720px;
+}
+
 footer,
 .dimension{
   @include col-wrap;
@@ -45,21 +48,26 @@ footer,
 .evergreen-menu{
   @include col(12);
 }
+
 .current-state-col{
   @include col(7);
 }
+
 .current-state-col,
 .current-rep-col,
 .action-col,
 .dimension-time-value{
     @include col(4);
 }
+
 .placeholder-col,
 .start-work-col,
 .time-total-col{
     @include col(6);
 }
-.adjust-work{@include col(5);}
+
+.adjust-work{ @include col(5); }
+
 .dimension-label{ @include col(3); }
 
 .skip-around{
@@ -74,18 +82,17 @@ footer,
 }
 
 @media(min-width: $tablet-width) {
-  .time-total-col, .placeholder-col{
-      @include col(4);
-    }
-  .placeholder-col, .start-work-col, .time-total-col{
-    @include col(4);
-  }
 
+  .time-total-col,
+  .placeholder-col,
+  .start-work-col,
+  .time-total-col,
   .adjust-work,
   .dimension-label,
   .dimension-time-value{
-      @include col(4);
+    @include col(4);
   }
+
   .skip-around{
     &.next{
       right: 12px;
@@ -99,12 +106,12 @@ footer,
 /* STRUCTURE */
 .timer{
     font-size: $fs-larger;
+    font-weight: bold;
     letter-spacing: 1px;
     text-transform: uppercase;
-    font-weight: bold;
     @media(min-width: $tablet-width) {
-        text-transform: none;
         font-family: $font-family-large-screen;
+        text-transform: none;
     }
     *{ -webkit-user-select: none; user-select: none; }
 
@@ -185,31 +192,28 @@ footer,
 
 button{
   background-color: transparent;
-  color: $baseline-color;
-  display: inline-block;
-  letter-spacing: 0;
-  //padding: 6px 12px;
-  margin-bottom: 0;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
-  border-radius: 4px;
-  outline: none;
-  text-transform: inherit;
-  -webkit-user-select: none;
-  //background-color: #fff;
   border-color: $clr-button-border;
+  border-radius: 4px;
+  color: $baseline-color;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: 0;
+  margin-bottom: 0;
+  outline: none;
+  text-align: center;
+  text-transform: inherit;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
     &.action{
         //background-color: white;
         background-color: $clr-button-background;
-        color: $white-faded-barely;
         border-color: $clr-button-border;
-        padding: 12px 10px 0px;
         border-radius: 50%;
-
+        color: $white-faded-barely;
+        padding: 12px 10px 0px;
     }
     &.previous, &.next{
       border: 0;
@@ -227,14 +231,13 @@ button{
         background-position: center center;
         background-repeat: no-repeat;
         background-size: 50%;
+        height: 42px;
         padding: 0;
         text-indent: -9999em;
         width: 42px;
-        height: 42px;
     }
     &.less{
         background-image: url(../images/minusFFFFFF.svg);
-        //right: 0;
     }
     &.more{
         background-image: url(../images/plusFFFFFF.svg);
@@ -257,7 +260,7 @@ button{
         height: 132px;
         width: 132px;
       }
-  }
+    }
     //@include transition (all .25s ease-in-out);
     &:hover{
         color: $baseline-color;
@@ -267,8 +270,8 @@ button{
 }
 
 .action-buttons-wrap{
-  margin: 0 auto;
   height: 96px;
+  margin: 0 auto;
   width: 96px;
   @media(min-width: $tablet-width) {
     height: 132px;
@@ -277,11 +280,11 @@ button{
 }
 
 #progress{
+  bottom: 0;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
   z-index: -1;
 }
 
@@ -320,9 +323,7 @@ button{
   }
   .social{
     float:right;
-    //background: rgba(2,2,2,.2);
     margin-right: 15px;
-    //margin-top: 12px;
     margin-left: 15px;
     width: 50%;
     a.facebook{
@@ -339,7 +340,6 @@ button{
     }
   }
 }
-
 
 .multipled:after{
   @media(min-width: $tablet-width) {
@@ -378,6 +378,7 @@ button{
     display: none;
     @media(min-width: $tablet-width) { display: block; }
 }
+
 .time-total-col{
     text-align: left;
     font-size: 132px;
@@ -386,9 +387,9 @@ button{
         font-size: $fs-huger;
         font-weight: bold;
         height: 166px;
+        line-height: $fs-huger - 10;
         position: relative;
         text-align: center;
-        //@include col(3);
     }
 }
 
