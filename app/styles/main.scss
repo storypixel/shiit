@@ -83,14 +83,18 @@ footer,
 
 @media(min-width: $tablet-width) {
 
-  .time-total-col,
+  //.time-total-col,
   .placeholder-col,
   .start-work-col,
-  .time-total-col,
+  //.time-total-col,
   .adjust-work,
   .dimension-label,
   .dimension-time-value{
     @include col(4);
+  }
+
+  .time-total-col{
+    @include col(8);
   }
 
   .skip-around{
@@ -376,7 +380,7 @@ button{
 // on the calibrate screen
 .placeholder-col{
     display: none;
-    @media(min-width: $tablet-width) { display: block; }
+ //   @media(min-width: $tablet-width) { display: block; }
 }
 
 .time-total-col{
@@ -389,7 +393,7 @@ button{
         height: 166px;
         line-height: $fs-huger - 10;
         position: relative;
-        text-align: center;
+ //       text-align: center;
     }
 }
 

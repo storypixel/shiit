@@ -277,10 +277,8 @@ footer,
     left: 0; }
 
 @media (min-width: 768px) {
-  .time-total-col,
   .placeholder-col,
   .start-work-col,
-  .time-total-col,
   .adjust-work,
   .dimension-label,
   .dimension-time-value {
@@ -290,6 +288,14 @@ footer,
     padding-right: 15px;
     position: relative;
     width: 33.33333%; }
+
+  .time-total-col {
+    float: left;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    width: 66.66667%; }
 
   .skip-around.next {
     right: 12px; }
@@ -521,9 +527,6 @@ button {
 
 .placeholder-col {
   display: none; }
-  @media (min-width: 768px) {
-    .placeholder-col {
-      display: block; } }
 
 .time-total-col {
   text-align: left;
@@ -535,8 +538,7 @@ button {
       font-weight: bold;
       height: 166px;
       line-height: 86px;
-      position: relative;
-      text-align: center; } }
+      position: relative; } }
 
 .action-col,
 .timer-action-col,
